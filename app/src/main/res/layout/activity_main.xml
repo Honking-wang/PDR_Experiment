@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <com.example.wanghanqing.godbless.AoMyView
+            android:id="@+id/main_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:id="@+id/peak"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:text="@string/peak"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/detectpeak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
+
+        <Button
+            android:id="@+id/GPStrack"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:text="@string/GPStrack"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/PDRtrack"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:text="@string/PDRtrack"
+            android:layout_above="@+id/GPStrack"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/locatetype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/sensordetect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/detectpeak"
+            android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:id="@+id/sensorcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_below="@+id/sensordetect"
+            android:layout_marginTop="13dp" />
+
+        <TextView
+            android:id="@+id/newori"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_below="@+id/sensorcount"
+            android:layout_marginTop="13dp" />
+
+        <Button
+            android:id="@+id/detectsensor"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:text="@string/detectsensor"
+            android:layout_above="@+id/peak"
+            android:layout_alignParentRight="true" />
+
+        <Button
+            android:id="@+id/record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/record"
+            android:layout_alignParentBottom="true" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/locate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/locate"/>
+
+        <Button
+            android:id="@+id/track"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/track" />
+
+        <Button
+            android:id="@+id/pedometer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/pedometer"/>
+    </LinearLayout>
+
+</LinearLayout>
+
+
+
+

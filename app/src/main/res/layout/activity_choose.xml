@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <CheckBox
+        android:id="@+id/locatebox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查看地图" />
+
+    <CheckBox
+        android:id="@+id/sensor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="传感器数据" />
+
+    <TextView
+        android:id="@+id/textview1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="轨迹记录方式" />
+
+    <CheckBox
+        android:id="@+id/GPS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/GPStrack" />
+
+    <CheckBox
+        android:id="@+id/PDR"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/PDRtrack" />
+
+
+    <LinearLayout
+        android:layout_width="356dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="记步" />
+
+        <RadioGroup
+            android:id="@+id/dx1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/jibu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="计步传感器" />
+
+            <RadioButton
+                android:id="@+id/bofeng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="波峰检测算法" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="算法" />
+
+        <RadioGroup
+            android:id="@+id/dx2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/wu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="无" />
+
+            <RadioButton
+                android:id="@+id/ekf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="扩展卡尔曼滤波" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/queren"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="确认" />
+    </LinearLayout>
+
+</LinearLayout>
