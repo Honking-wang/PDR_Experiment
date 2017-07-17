@@ -8,7 +8,11 @@ import android.widget.CheckBox;
 
 public class ChooseActivity extends AppCompatActivity {
 
+    private boolean locflag;
+    private boolean senflag;
+
     private CheckBox locate;
+    private CheckBox sensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,12 +20,32 @@ public class ChooseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose);
 
         locate = (CheckBox) findViewById(R.id.locatebox);
+        sensor = (CheckBox) findViewById(R.id.sensorbox);
 
         locate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(ChooseActivity.this,MainActivity.class);
-                startActivity(intent);
+                if (!locflag) {
+
+                    Intent intent = new Intent(ChooseActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    locflag = true;
+                } else {
+                    locflag = false;
+                }
+            }
+        });
+
+        sensor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!senflag) {
+                    Intent intent = new Intent(ChooseActivity.this, SensorActivity.class);
+                    startActivity(intent);
+                    senflag = true;
+                } else {
+                    senflag = false;
+                }
             }
         });
 

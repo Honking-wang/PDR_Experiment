@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
     public String provider;
     public static Location location;
 
-    private Button locate;
     private Button track;
     private Button GPStrack;
     private Button PDRtrack;
@@ -192,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         //各种view的捆绑
-        locate = (Button) findViewById(R.id.locate);
         track = (Button) findViewById(R.id.track);
         GPStrack = (Button) findViewById(R.id.GPStrack);
         PDRtrack = (Button) findViewById(R.id.PDRtrack);
@@ -274,62 +272,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-   /* *//**
-     * 定位按钮点击事件监听器，实现定位
-     *//*
-    class LocateListener implements View.OnClickListener {
-        @Override
-        public void onClick(View view) {
-            switch (locflag) {
-
-                case 0:
-                    //定位模块
-                    Toast.makeText(MainActivity.this, "正在进行定位", Toast.LENGTH_SHORT).show();
-                    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                    Criteria criteria = new Criteria();
-                    criteria.setAccuracy(Criteria.ACCURACY_FINE);
-                    criteria.setAltitudeRequired(false);
-                    criteria.setBearingRequired(false);
-                    criteria.setCostAllowed(true);
-                    criteria.setPowerRequirement(Criteria.POWER_LOW);
-                    provider = locationManager.getBestProvider(criteria, true);
-                    location = locationManager.getLastKnownLocation(provider);
-                    locationManager.requestLocationUpdates(provider, 500, 3, locationListener);
-
-                    GeoClassType geoClassType[] = new GeoClassType[1];
-                    geoClassType[0] = GeoClassType.POLYGON;
-                    workSpace = aoMap.getWorkSpace();
-
-                    updateWithNewLocation(location);
-
-                    locatetype_text = (TextView) findViewById(R.id.locatetype);
-                    StringBuilder locString = new StringBuilder();
-                    locString.append("定位模式：");
-                    if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                            && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                        locString.append("GPS卫星定位");
-                    } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-                            && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                        locString.append("网络定位");
-                    } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                            && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                        locString.append("GPS和网络定位");
-                    } else {
-                        locString.append("其他的定位方式");
-                    }
-                    locatetype_text.setText(locString);
-                    locflag = 1;
-                    break;
-                case 1:
-                    updateWithNewLocation(null);
-                    locatetype_text.setText(" ");
-                    locflag = 0;
-                    break;
-            }
-        }
-    }
-*/
     class RecordListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
@@ -536,7 +478,7 @@ public class MainActivity extends AppCompatActivity {
             SensorManager.getOrientation(r, values);
             orient = (float) Math.toDegrees(values[0]);
             if (orient < 0) {
-              orient += 360;
+                orient += 360;
             }
             newori.setText("new与正北夹角" + orient);
 

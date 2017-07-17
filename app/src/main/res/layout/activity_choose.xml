@@ -12,7 +12,7 @@
         android:text="查看地图" />
 
     <CheckBox
-        android:id="@+id/sensor"
+        android:id="@+id/sensorbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="传感器数据" />
