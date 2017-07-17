@@ -83,12 +83,7 @@
             android:layout_above="@+id/peak"
             android:layout_alignParentRight="true" />
 
-        <Button
-            android:id="@+id/record"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/record"
-            android:layout_alignParentBottom="true" />
+
 
 
     </RelativeLayout>
@@ -100,11 +95,11 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/locate"
+            android:id="@+id/record"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/locate"/>
+            android:text="@string/record"/>
 
         <Button
             android:id="@+id/track"
