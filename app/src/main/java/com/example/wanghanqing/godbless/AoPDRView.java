@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 
 import com.AoGIS.render.AoView;
 
@@ -25,11 +26,12 @@ public class AoPDRView extends AoView {
     public static ArrayList<double[]> List;// 存放轨迹点坐标的List
     private Canvas canvas;
     private float[] arr;// 用于坐标转换的x、y坐标值
-    public double x;
-    public double y;
+    public double x = 39443571;
+    public double y = 4429844;
     public float wx;// 坐标转换后的x
     public float wy;// 坐标转换后的y
 
+    android.graphics.Paint paint = new android.graphics.Paint();
 
     public AoPDRView(Context context) {
         super(context);
@@ -70,9 +72,15 @@ public class AoPDRView extends AoView {
 
     }
 
-    android.graphics.Paint paint = new android.graphics.Paint();
 
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        x = (double) event.getX();
+//        y = (double) event.getY();
+//        return true;
+//    }
 
+    @Override
     public void onUserBitmapDraw(Bitmap bitmap) {
         super.onUserBitmapDraw(bitmap);
         canvas = new Canvas(bitmap);
@@ -80,7 +88,7 @@ public class AoPDRView extends AoView {
 
         // 只绘制定位点
         //MainActivity.COUNT = 0;
-        List.clear();
+        //List.clear();
         paint.setColor(Color.BLUE);
         paint.setAlpha(200);
         // 让画出的图形是空心的

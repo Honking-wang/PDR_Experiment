@@ -56,8 +56,8 @@ public class PDRTrackActivity extends Activity {
         mapView3.updateView();
 
         //记录gps轨迹
-        mapView3.x = XX;
-        mapView3.y = YY;
+//        mapView3.x = XX;
+//        mapView3.y = YY;
 
         mapView3.updateView();
     }

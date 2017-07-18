@@ -102,6 +102,7 @@ public class GPSTrackActivity extends Activity {
         mapView2.x = XX;
         mapView2.y = YY;
 
+
         mapView2.updateView();
     }
 
