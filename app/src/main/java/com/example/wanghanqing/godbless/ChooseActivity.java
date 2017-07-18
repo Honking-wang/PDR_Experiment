@@ -10,9 +10,11 @@ public class ChooseActivity extends AppCompatActivity {
 
     private boolean locflag;
     private boolean senflag;
+    private boolean gpstrackflag;
 
     private CheckBox locate;
     private CheckBox sensor;
+    private CheckBox gpstrack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +23,7 @@ public class ChooseActivity extends AppCompatActivity {
 
         locate = (CheckBox) findViewById(R.id.locatebox);
         sensor = (CheckBox) findViewById(R.id.sensorbox);
+        gpstrack= (CheckBox) findViewById(R.id.GPS);
 
         locate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +52,18 @@ public class ChooseActivity extends AppCompatActivity {
             }
         });
 
+        gpstrack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!gpstrackflag) {
+                    Intent intent = new Intent(ChooseActivity.this, GPSTrackActivity.class);
+                    startActivity(intent);
+                    gpstrackflag = true;
+                } else {
+                    gpstrackflag = false;
+                }
+            }
+        });
 
     }
 }
