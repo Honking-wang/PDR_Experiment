@@ -24,7 +24,8 @@
         <activity android:name=".SensorActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".GPStrackActivity" />
-        <activity android:name=".GPSTrackActivity"></activity>
+        <activity android:name=".GPSTrackActivity" />
+        <activity android:name=".PDRTrackActivity"></activity>
     </application>
 
 </manifest>
