@@ -31,6 +31,7 @@ public class AoPDRView extends AoView {
     public float wx;// 坐标转换后的x
     public float wy;// 坐标转换后的y
 
+
     android.graphics.Paint paint = new android.graphics.Paint();
 
     public AoPDRView(Context context) {
@@ -38,6 +39,7 @@ public class AoPDRView extends AoView {
         BitmapFactory bf = new BitmapFactory();
         preCoord = new double[2];
         List = new ArrayList<double[]>();
+        List.add(new double[]{x, y});
         dingweiBitmap = bf.decodeResource(getResources(), R.drawable.dingwei);
         guijidianBitmap = bf.decodeResource(getResources(),
                 R.drawable.guijidian);
@@ -51,6 +53,7 @@ public class AoPDRView extends AoView {
         BitmapFactory bf = new BitmapFactory();
         preCoord = new double[2];
         List = new java.util.ArrayList<double[]>();
+        List.add(new double[]{x, y});
         dingweiBitmap = bf.decodeResource(getResources(), R.drawable.dingwei);
         guijidianBitmap = bf.decodeResource(getResources(),
                 R.drawable.guijidian);
@@ -64,46 +67,47 @@ public class AoPDRView extends AoView {
         BitmapFactory bf = new BitmapFactory();
         preCoord = new double[2];
         List = new java.util.ArrayList<double[]>();
+        List.add(new double[]{x, y});
         dingweiBitmap = bf.decodeResource(getResources(), R.drawable.dingwei);
         guijidianBitmap = bf.decodeResource(getResources(),
                 R.drawable.guijidian);
         displayBitmap = bf.decodeResource(getResources(),
                 R.drawable.display);
 
+
     }
 
 
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        x = (double) event.getX();
-//        y = (double) event.getY();
-//        return true;
-//    }
+    public void addPoint(float orient) {
+        x += +50 * Math.sin(Math.toRadians(orient));
+        y += +50 * Math.cos(Math.toRadians(orient));
+        AoPDRView.List.add(new double[]{x, y});
+    }
 
     @Override
     public void onUserBitmapDraw(Bitmap bitmap) {
         super.onUserBitmapDraw(bitmap);
         canvas = new Canvas(bitmap);
 
+        for (int i = 0; i < List.size(); i++) {
 
-        // 只绘制定位点
-        //MainActivity.COUNT = 0;
-        //List.clear();
-        paint.setColor(Color.BLUE);
-        paint.setAlpha(200);
-        // 让画出的图形是空心的
-        paint.setStyle(android.graphics.Paint.Style.FILL);
-        // 设置画出的线的 粗细程度
-        paint.setStrokeWidth(5);
-        // 画圆
+            preCoord = List.get(i);
+            paint.setColor(Color.BLUE);
+            paint.setAlpha(200);
+            // 让画出的图形是空心的
+            paint.setStyle(android.graphics.Paint.Style.FILL);
+            // 设置画出的线的 粗细程度
+            paint.setStrokeWidth(5);
+            // 画圆
 
 
-        arr = MCoordToWCoord(x, y);
+            arr = MCoordToWCoord(preCoord[0], preCoord[1]);
 
-        wx = (float) arr[0];
-        wy = (float) arr[1];
+            wx = (float) arr[0];
+            wy = (float) arr[1];
 
-        canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+            canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+        }
     }
 }
 
