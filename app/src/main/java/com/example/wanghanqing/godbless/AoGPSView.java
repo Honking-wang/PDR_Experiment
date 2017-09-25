@@ -44,6 +44,7 @@ public class AoGPSView extends AoView {
 
     }
 
+
     public AoGPSView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         BitmapFactory bf = new BitmapFactory();
@@ -56,6 +57,7 @@ public class AoGPSView extends AoView {
                 R.drawable.display);
 
     }
+
 
     public AoGPSView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -70,34 +72,131 @@ public class AoGPSView extends AoView {
 
     }
 
+
     android.graphics.Paint paint = new android.graphics.Paint();
+    android.graphics.Paint paint1 = new android.graphics.Paint();
+
+
+//    public void onUserBitmapDraw(Bitmap bitmap) {
+//        super.onUserBitmapDraw(bitmap);
+//        canvas = new Canvas(bitmap);
+//
+//
+//        // 只绘制定位点
+//        //MainActivity.COUNT = 0;
+//        List.clear();
+//        paint.setColor(Color.BLUE);
+//        paint.setAlpha(200);
+//        // 让画出的图形是空心的
+//        paint.setStyle(android.graphics.Paint.Style.FILL);
+//        // 设置画出的线的 粗细程度
+//        paint.setStrokeWidth(5);
+//        // 画圆
+//
+//
+//        arr = MCoordToWCoord(x, y);
+//
+//        wx = (float) arr[0];
+//        wy = (float) arr[1];
+//
+//        canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+//
+//    }
 
 
     public void onUserBitmapDraw(Bitmap bitmap) {
         super.onUserBitmapDraw(bitmap);
         canvas = new Canvas(bitmap);
+        // 进行轨迹点绘制
+        if (GPSTrackActivity.FLAG) {
+            if (GPSTrackActivity.COUNT != 0) {
+                preCoord = List.get(GPSTrackActivity.COUNT - 1);// 判断是否和上一个点的坐标一样
+                if ((preCoord[0] != MainActivity.X)
+                        || (preCoord[1] != MainActivity.Y)) {
+                    List.add(GPSTrackActivity.COUNT, new double[]{GPSTrackActivity.XX,
+                            GPSTrackActivity.YY});// 将当前位置点添加到List中
+                    GPSTrackActivity.COUNT = GPSTrackActivity.COUNT + 1;// 计数器+1
+                    for (int i = 0; i < GPSTrackActivity.COUNT; i++)// 绘制以往位置点到为图上
+                    {
+                        preCoord = List.get(i);
+                        arr = MCoordToWCoord(preCoord[0], preCoord[1]);
+                        wx = (int) arr[0];
+                        wy = (int) arr[1];
+                        canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+                    }
+                } else {
+                    for (int i = 0; i < GPSTrackActivity.COUNT; i++)// 绘制以往位置点到为图上
+                    {
+                        preCoord = List.get(i);
+                        arr = MCoordToWCoord(preCoord[0], preCoord[1]);
+                        wx = (int) arr[0];
+                        wy = (int) arr[1];
+                        canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+                    }
+                }
 
+            } else {
+                List.add(GPSTrackActivity.COUNT, new double[]{GPSTrackActivity.XX,
+                        GPSTrackActivity.YY});// 将当前位置点添加到List中
+                GPSTrackActivity.COUNT = GPSTrackActivity.COUNT + 1;// 计数器+1
 
-        // 只绘制定位点
-        //MainActivity.COUNT = 0;
-        List.clear();
-        paint.setColor(Color.BLUE);
-        paint.setAlpha(200);
-        // 让画出的图形是空心的
-        paint.setStyle(android.graphics.Paint.Style.FILL);
-        // 设置画出的线的 粗细程度
-        paint.setStrokeWidth(5);
-        // 画圆
+                for (int i = 0; i < GPSTrackActivity.COUNT; i++)// 绘制以往位置点到为图上
+                {
+                    preCoord = List.get(i);
+                    arr = MCoordToWCoord(preCoord[0], preCoord[1]);
+                    wx = (int) arr[0];
+                    wy = (int) arr[1];
+                    canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
 
+                }
+            }
+            double x = GPSTrackActivity.XX;
+            double y = GPSTrackActivity.YY;
+            arr = MCoordToWCoord(x, y);
+            wx = (int) arr[0];
+            wy = (int) arr[1];
+            canvas.drawBitmap(dingweiBitmap, wx - 8, wy - 8, null);
+        } else {
+            // 只绘制定位点
+            GPSTrackActivity.COUNT = 0;
+            List.clear();
+            paint.setColor(Color.BLUE);
+            paint.setAlpha(200);
+            // 让画出的图形是空心的
+            paint.setStyle(android.graphics.Paint.Style.FILL);
+            // 设置画出的线的 粗细程度
+            paint.setStrokeWidth(5);
+            // 画圆
 
-        arr = MCoordToWCoord(x, y);
+            double x = GPSTrackActivity.XX;
+            double y = GPSTrackActivity.YY;
+            arr = MCoordToWCoord(x, y);
 
-        wx = (float) arr[0];
-        wy = (float) arr[1];
+            wx = (int) arr[0];
+            wy = (int) arr[1];
 
-        canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+            canvas.drawBitmap(dingweiBitmap, wx - 8, wy - 8, null);
+        }
+        if (GPSTrackActivity.DISPLAY)//如果开启了轨迹显示
+        {
+            for (int i = 0; i < GPSTrackActivity.displayList.size(); i++)// 绘制以往位置点到为图上
+            {
+                preCoord = GPSTrackActivity.displayList.get(i);
+                arr = MCoordToWCoord(preCoord[0], preCoord[1]);
+                wx = (int) arr[0];
+                wy = (int) arr[1];
+                canvas.drawBitmap(displayBitmap, wx - 8, wy - 8, null);
+            }
+        }
     }
 }
+
+
+
+
+
+
+
 
 
 

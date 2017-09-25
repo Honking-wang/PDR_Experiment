@@ -7,6 +7,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +24,15 @@ import static com.example.wanghanqing.godbless.Values.LIBPATH;
 
 public class GPSTrackActivity extends Activity {
 
+    public static boolean DISPLAY;// 轨迹显示开关
+    public static java.util.ArrayList<double[]> displayList;// 读取的轨迹坐标记录
+    public static boolean FLAG;// 轨迹记录开关
+    public static int COUNT;// 定位点个数
+
     public static double XX;
     public static double YY;
+
+
 
 
     double m_dRate = 1;//比例尺
@@ -39,6 +48,7 @@ public class GPSTrackActivity extends Activity {
 
 
     private TextView locatetype_text2;
+    private Button bcgj;
 
 
     @Override
@@ -52,9 +62,10 @@ public class GPSTrackActivity extends Activity {
         mapView2.setActivity(this);
         aoMap2 = new AoMap();
         aoMap2.openMap(GPJPATH);
-
-
         mapView2.setMap(aoMap2);//指定mapView显示map代表的地图文件
+
+        bcgj = (Button) this.findViewById(R.id.bcgj);
+        bcgj.setOnClickListener(new BCGJListener());
 
         //定位模块
         Toast.makeText(GPSTrackActivity.this, "正在进行定位", Toast.LENGTH_SHORT).show();
@@ -67,15 +78,23 @@ public class GPSTrackActivity extends Activity {
         criteria.setPowerRequirement(Criteria.POWER_LOW);
         provider2 = locationManager2.getBestProvider(criteria, true);
         location2 = locationManager2.getLastKnownLocation(provider2);
-        locationManager2.requestLocationUpdates(provider2, 500, 3, locationListener);
+        locationManager2.requestLocationUpdates(provider2, 1000, 10, locationListener);
 
+
+        int ids[] = new int[1];
         GeoClassType geoClassType[] = new GeoClassType[1];
+
+        ids[0] = 1;
         geoClassType[0] = GeoClassType.POLYGON;
         workSpace2 = aoMap2.getWorkSpace();
 
+
+
+
+        COUNT = 0;
         updateWithNewLocation(location2);
 
-        locatetype_text2 = (TextView) findViewById(R.id.locatetype2);
+        locatetype_text2 = findViewById(R.id.locatetype2);
         StringBuilder locString = new StringBuilder();
         locString.append("定位模式：");
         if (locationManager2.isProviderEnabled(LocationManager.GPS_PROVIDER)
@@ -98,13 +117,101 @@ public class GPSTrackActivity extends Activity {
         mapView2.zoomView(-480, 800, 6);
         mapView2.updateView();
 
+
+
+
         //记录gps轨迹
-        mapView2.x = XX;
-        mapView2.y = YY;
+
+//        double[] points = new double[2 * (COUNT + 1)];// 加入了当前位置，所以+1，COUNT不包括当前位置
+//        double[] zuobiao;
+//        for (int i = 0; i < COUNT; i++) {
+//            zuobiao = mapView2.List.get(i);
+//            points[i * 2] = zuobiao[0];
+//            points[i * 2 + 1] = zuobiao[1];
+//        }
+//        // 加入当前点
+//        points[2 * COUNT] = XX;
+//        points[2 * COUNT + 1] = YY;
 
 
-        mapView2.updateView();
+        for (int i = 0; i < 1000; i++) {
+
+
+            updateWithNewLocation(location2);
+
+            mapView2.x = XX;
+            mapView2.y = YY;
+            mapView2.updateView();
+        }
     }
+
+
+
+
+    final class BCGJListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            if (!FLAG) {
+                // 如果轨迹功能没有开启。
+                if (Utils.GPSisOPen(getApplicationContext())) {
+                    if (location2 != null) {
+                        FLAG = true;
+                        COUNT = 0;
+                        mapView2.updateView();
+                        bcgj.setText("轨迹关闭");
+                        Toast.makeText(getApplicationContext(), "轨迹记录开始",
+                                Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Toast.makeText(getApplicationContext(),
+                                "卫星信号弱，无法获取位置信息。", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "请开启位置服务",
+                            Toast.LENGTH_SHORT).show();
+                }
+            } else {
+
+                double[] points = new double[2 * (COUNT + 1)];// 加入了当前位置，所以+1，COUNT不包括当前位置
+                double[] zuobiao;
+                for (int i = 0; i < COUNT; i++) {
+                    zuobiao = mapView2.List.get(i);
+                    points[i * 2] = zuobiao[0];
+                    points[i * 2 + 1] = zuobiao[1];
+                }
+                // 加入当前点
+                points[2 * COUNT] = XX;
+                points[2 * COUNT + 1] = YY;
+
+                StringBuffer stringBuffer = new StringBuffer();
+
+                for (int i = 0; i < COUNT; i++) {// 无需加入当前位置的点
+                    stringBuffer.append(points[2 * i] + " ");
+                    stringBuffer.append(points[2 * i + 1] + "\n");
+                }
+
+                FLAG = false;
+                COUNT = 0;
+                bcgj.setText("轨迹开启");
+                mapView2.updateView();
+
+            }
+
+            // 创建TXT示例代码
+            // if (Values.saveTrace(Values.TRACEPATH, "abcdefg"))
+            // Toast.makeText(MainActivity.this, "保存成功", Toast.LENGTH_SHORT)
+            // .show();
+        }
+    }
+
+
+
+
+
+
+
+
 
     private void updateWithNewLocation(Location location) {
         double[] position = null;

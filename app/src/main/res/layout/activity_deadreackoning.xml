@@ -9,18 +9,12 @@
         android:layout_height="0dp"
         android:layout_weight="10">
 
-        <com.example.wanghanqing.godbless.AoGPSView
-            android:id="@+id/main2_view"
+        <com.example.wanghanqing.godbless.AoPDRView
+            android:id="@+id/dr_mapview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/locatetype2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true" />
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -28,16 +22,11 @@
 
 
         <Button
-            android:id="@+id/bcgj"
+            android:id="@+id/pdrstart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="记录轨迹" />
+            android:text="开启轨迹" />
     </LinearLayout>
 
-
 </LinearLayout>
-
-
-
-

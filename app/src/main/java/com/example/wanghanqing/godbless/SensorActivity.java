@@ -29,17 +29,42 @@ public class SensorActivity extends AppCompatActivity {
     float[] r = new float[9];//旋转矩阵
     float[] values = new float[3];
     private float orient;
+    private float orient2;
+    private float gyro1;
+    private float gyro2;
+    private float gyro3;
+    private float gyro_unca1;
+    private float gyro_unca2;
+    private float gyro_unca3;
+    private float gyro_unca4;
+    private float gyro_unca5;
+    private float gyro_unca6;
+    private float acc1;
+    private float acc2;
+    private float acc3;
+    private float mag1;
+    private float mag2;
+    private float mag3;
 
     private Button startButton;
     private Button stopButton;
     private TextView timTextView;
     private TextView oriTextView;
+    private TextView ori2TextView;
+    private TextView gyroTextView;
+    private TextView gyro_uncaTextView;
+    private TextView accTextView;
+    private TextView magTextView;
+    //private TextView gpsTextView;
     private TextView steTextView;
 
     private SensorManager sensorManager = null;
     private Sensor sensor_DETECTOR = null;
     private Sensor sensor_ACCELEROMETER = null;
     private Sensor sensor_MAGNETIC = null;
+    private Sensor sensor_Oritation = null;
+    private Sensor sensor_Gyroscope = null;
+    private Sensor sensor_Gyroscope_uncalibrated = null;
 
     private MySensorEventListener mySensorEventListener;
 
@@ -58,12 +83,21 @@ public class SensorActivity extends AppCompatActivity {
         stopButton.setEnabled(false);
         timTextView = (TextView) this.findViewById(R.id.time);
         oriTextView = (TextView) this.findViewById(R.id.orient);
+        ori2TextView = (TextView) findViewById(R.id.orient2);
+        gyroTextView = (TextView) findViewById(R.id.gyro);
+        gyro_uncaTextView = (TextView) findViewById(R.id.gyro2);
+        //gpsTextView = (TextView) findViewById(R.id.gpsnum);
+        accTextView = (TextView) findViewById(R.id.acc);
+        magTextView = (TextView) findViewById(R.id.magn);
         steTextView = (TextView) this.findViewById(R.id.step);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor_ACCELEROMETER = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);// 加速度传感器
         sensor_MAGNETIC = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        sensor_DETECTOR = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);//
+        sensor_Oritation = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);//已弃用，强行实验对比
+        sensor_DETECTOR = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+        sensor_Gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        sensor_Gyroscope_uncalibrated = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE_UNCALIBRATED);
         mySensorEventListener = new MySensorEventListener();
         stringBuilder = new StringBuilder();
 
@@ -83,10 +117,29 @@ public class SensorActivity extends AppCompatActivity {
                 handler.postDelayed(this, 20);
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss");
                 timTextView.setText(sdf.format(new Date()));
-                stringBuilder.append(sdf.format(new Date()) + "   ");
+                stringBuilder.append(sdf.format(new Date()) + "    ");
 
                 oriTextView.setText("" + orient);
-                stringBuilder.append(orient + "   ");
+                stringBuilder.append(orient + "    ");
+
+                ori2TextView.setText("" + orient2);
+                stringBuilder.append(orient2 + "    ");
+
+                gyroTextView.setText("" + gyro1 + "" + gyro2 + "" + gyro3);
+                stringBuilder.append(gyro1 + "    " + gyro2 + "    " + gyro3 + "    ");
+
+                gyro_uncaTextView.setText("" + gyro_unca1 + "" + gyro_unca2 + "" + gyro_unca3 + ""
+                        + gyro_unca4 + "" + gyro_unca5 + "" + gyro_unca6 + "    ");
+
+                stringBuilder.append(gyro_unca1 + "    " + gyro_unca2 + "    " + gyro_unca3 + "    "
+                        + gyro_unca4 + "    " + gyro_unca5 + "    " + gyro_unca6 + "    ");
+
+                accTextView.setText("" + acc1 + "" + acc2 + "" + acc3);
+                stringBuilder.append(acc1 + "    " + acc2 + "    " + acc3 + "    ");
+
+                magTextView.setText("" + mag1 + "" + mag2 + "" + mag3);
+                stringBuilder.append(mag1 + "    " + mag2 + "    " + mag3 + "    ");
+
 
                 steTextView.setText("" + step);
                 stringBuilder.append(step + "\r\n");
@@ -106,6 +159,9 @@ public class SensorActivity extends AppCompatActivity {
             sensorManager.registerListener(mySensorEventListener, sensor_ACCELEROMETER, SensorManager.SENSOR_DELAY_FASTEST);
             sensorManager.registerListener(mySensorEventListener, sensor_MAGNETIC, SensorManager.SENSOR_DELAY_FASTEST);
             sensorManager.registerListener(mySensorEventListener, sensor_DETECTOR, SensorManager.SENSOR_DELAY_FASTEST);
+            sensorManager.registerListener(mySensorEventListener, sensor_Oritation, SensorManager.SENSOR_DELAY_FASTEST);
+            sensorManager.registerListener(mySensorEventListener, sensor_Gyroscope, SensorManager.SENSOR_DELAY_FASTEST);
+            sensorManager.registerListener(mySensorEventListener, sensor_Gyroscope_uncalibrated, sensorManager.SENSOR_DELAY_FASTEST);
             handler.postDelayed(runnable, 20);
         }
     }
@@ -121,6 +177,9 @@ public class SensorActivity extends AppCompatActivity {
             sensorManager.unregisterListener(mySensorEventListener, sensor_ACCELEROMETER);
             sensorManager.unregisterListener(mySensorEventListener, sensor_MAGNETIC);
             sensorManager.unregisterListener(mySensorEventListener, sensor_DETECTOR);
+            sensorManager.unregisterListener(mySensorEventListener, sensor_Oritation);
+            sensorManager.unregisterListener(mySensorEventListener, sensor_Gyroscope);
+            sensorManager.unregisterListener(mySensorEventListener, sensor_Gyroscope_uncalibrated);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(
                     v.getContext());
@@ -162,19 +221,50 @@ public class SensorActivity extends AppCompatActivity {
                     steTextView.setText("" + step);
                 }
             }
+            if (sensorEvent.sensor.getType() == Sensor.TYPE_ORIENTATION) {
+                orient = sensorEvent.values[0];
+                oriTextView.setText("" + orient);
+            }
+            if (sensorEvent.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+                gyro1 = sensorEvent.values[0];
+                gyro2 = sensorEvent.values[1];
+                gyro3 = sensorEvent.values[2];
+                gyroTextView.setText(" gyro1: " + gyro1 + " gyro2: " + gyro2 + " gyro3: " + gyro3);
+            }
+            if (sensorEvent.sensor.getType() == Sensor.TYPE_GYROSCOPE_UNCALIBRATED) {
+                gyro_unca1 = sensorEvent.values[0];
+                gyro_unca2 = sensorEvent.values[1];
+                gyro_unca3 = sensorEvent.values[2];
+                gyro_unca4 = sensorEvent.values[3];
+                gyro_unca5 = sensorEvent.values[4];
+                gyro_unca6 = sensorEvent.values[5];
+                gyro_uncaTextView.setText(" gyro_unca1: " + gyro_unca1 + " gyro_unca2: " + gyro_unca2 +
+                        " gyro_unca3: " + gyro_unca3 + " gyro_unca4: " + gyro_unca4 + " gyro_unca5: "
+                        + gyro_unca5 + " gyro_unca6: " + gyro_unca6);
+            }
             if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
                 accelerometerValues = sensorEvent.values.clone();
+                acc1 = sensorEvent.values[0];
+                acc2 = sensorEvent.values[1];
+                acc3 = sensorEvent.values[2];
+                accTextView.setText(" acc1: " + sensorEvent.values[0] + " acc2: " + sensorEvent.values[1] +
+                        " acc3: " + sensorEvent.values[2]);
             }
             if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
                 magneticfieldValues = sensorEvent.values.clone();
+                mag1 = sensorEvent.values[0];
+                mag2 = sensorEvent.values[1];
+                mag3 = sensorEvent.values[2];
+                magTextView.setText(" mag1: " + sensorEvent.values[0] + " mag2: " + sensorEvent.values[1] +
+                        " mag3: " + sensorEvent.values[2]);
             }
             SensorManager.getRotationMatrix(r, null, accelerometerValues, magneticfieldValues);
             SensorManager.getOrientation(r, values);
-            orient = (float) Math.toDegrees(values[0]);
-            if (orient < 0) {
-                orient += 360;
+            orient2 = (float) Math.toDegrees(values[0]);
+            if (orient2 < 0) {
+                orient2 += 360;
             }
-            oriTextView.setText("" + orient);
+            oriTextView.setText("" + orient2);
         }
 
         @Override

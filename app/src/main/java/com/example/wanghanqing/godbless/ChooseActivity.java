@@ -58,7 +58,7 @@ public class ChooseActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!locflag) {
 
-                    Intent intent = new Intent(ChooseActivity.this, MainActivity.class);
+                    Intent intent = new Intent(ChooseActivity.this, DeaadReackoningActivity.class);
                     startActivity(intent);
                     locflag = true;
                 } else {

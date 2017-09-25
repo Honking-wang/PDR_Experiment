@@ -8,4 +8,5 @@
     <string name="GPStrack">GPS轨迹</string>
     <string name="PDRtrack">PDR轨迹</string>
     <string name="record">记录</string>
+    <string name="title_activity_gps2">GPS2Activity</string>
 </resources>
