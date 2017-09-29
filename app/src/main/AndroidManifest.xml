@@ -25,7 +25,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".GPSTrackActivity" />
         <activity android:name=".PDRTrackActivity" />
-        <activity android:name=".DeaadReackoningActivity"></activity>
+        <activity android:name=".DeadReackoningActivity"></activity>
     </application>
 
 </manifest>

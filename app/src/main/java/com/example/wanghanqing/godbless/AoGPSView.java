@@ -49,7 +49,7 @@ public class AoGPSView extends AoView {
         super(context, attrs, defStyle);
         BitmapFactory bf = new BitmapFactory();
         preCoord = new double[2];
-        List = new java.util.ArrayList<double[]>();
+        List = new ArrayList<double[]>();
         dingweiBitmap = bf.decodeResource(getResources(), R.drawable.dingwei);
         guijidianBitmap = bf.decodeResource(getResources(),
                 R.drawable.guijidian);

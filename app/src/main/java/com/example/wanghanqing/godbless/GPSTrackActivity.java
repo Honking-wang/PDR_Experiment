@@ -118,31 +118,15 @@ public class GPSTrackActivity extends Activity {
         mapView2.updateView();
 
 
-
-
-        //记录gps轨迹
-
-//        double[] points = new double[2 * (COUNT + 1)];// 加入了当前位置，所以+1，COUNT不包括当前位置
-//        double[] zuobiao;
-//        for (int i = 0; i < COUNT; i++) {
-//            zuobiao = mapView2.List.get(i);
-//            points[i * 2] = zuobiao[0];
-//            points[i * 2 + 1] = zuobiao[1];
+//        for (int i = 0; i < 1000; i++) {
+//
+//
+//            updateWithNewLocation(location2);
+//
+//            mapView2.x = XX;
+//            mapView2.y = YY;
+//            mapView2.updateView();
 //        }
-//        // 加入当前点
-//        points[2 * COUNT] = XX;
-//        points[2 * COUNT + 1] = YY;
-
-
-        for (int i = 0; i < 1000; i++) {
-
-
-            updateWithNewLocation(location2);
-
-            mapView2.x = XX;
-            mapView2.y = YY;
-            mapView2.updateView();
-        }
     }
 
 

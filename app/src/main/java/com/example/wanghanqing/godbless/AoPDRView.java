@@ -78,20 +78,62 @@ public class AoPDRView extends AoView {
     }
 
 
-    public void addPoint(float orient) {
-        x += +50 * Math.sin(Math.toRadians(orient));
-        y += +50 * Math.cos(Math.toRadians(orient));
-        AoPDRView.List.add(new double[]{x, y});
-    }
-
-    @Override
     public void onUserBitmapDraw(Bitmap bitmap) {
         super.onUserBitmapDraw(bitmap);
         canvas = new Canvas(bitmap);
+        // 进行轨迹点绘制
+        if (DeadReackoningActivity.flag) {
+            if (GPSTrackActivity.COUNT != 0) {
+                preCoord = List.get(GPSTrackActivity.COUNT - 1);// 判断是否和上一个点的坐标一样
+                if ((preCoord[0] != MainActivity.X)
+                        || (preCoord[1] != MainActivity.Y)) {
+                    List.add(GPSTrackActivity.COUNT, new double[]{GPSTrackActivity.XX,
+                            GPSTrackActivity.YY});// 将当前位置点添加到List中
+                    GPSTrackActivity.COUNT = GPSTrackActivity.COUNT + 1;// 计数器+1
+                    for (int i = 0; i < GPSTrackActivity.COUNT; i++)// 绘制以往位置点到为图上
+                    {
+                        preCoord = List.get(i);
+                        arr = MCoordToWCoord(preCoord[0], preCoord[1]);
+                        wx = (int) arr[0];
+                        wy = (int) arr[1];
+                        canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+                    }
+                } else {
+                    for (int i = 0; i < GPSTrackActivity.COUNT; i++)// 绘制以往位置点到为图上
+                    {
+                        preCoord = List.get(i);
+                        arr = MCoordToWCoord(preCoord[0], preCoord[1]);
+                        wx = (int) arr[0];
+                        wy = (int) arr[1];
+                        canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+                    }
+                }
 
-        for (int i = 0; i < List.size(); i++) {
+            } else {
+                List.add(GPSTrackActivity.COUNT, new double[]{GPSTrackActivity.XX,
+                        GPSTrackActivity.YY});// 将当前位置点添加到List中
+                GPSTrackActivity.COUNT = GPSTrackActivity.COUNT + 1;// 计数器+1
 
-            preCoord = List.get(i);
+                for (int i = 0; i < GPSTrackActivity.COUNT; i++)// 绘制以往位置点到为图上
+                {
+                    preCoord = List.get(i);
+                    arr = MCoordToWCoord(preCoord[0], preCoord[1]);
+                    wx = (int) arr[0];
+                    wy = (int) arr[1];
+                    canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+
+                }
+            }
+            double x = GPSTrackActivity.XX;
+            double y = GPSTrackActivity.YY;
+            arr = MCoordToWCoord(x, y);
+            wx = (int) arr[0];
+            wy = (int) arr[1];
+            canvas.drawBitmap(dingweiBitmap, wx - 8, wy - 8, null);
+        } else {
+            // 只绘制定位点
+            GPSTrackActivity.COUNT = 0;
+            List.clear();
             paint.setColor(Color.BLUE);
             paint.setAlpha(200);
             // 让画出的图形是空心的
@@ -100,13 +142,25 @@ public class AoPDRView extends AoView {
             paint.setStrokeWidth(5);
             // 画圆
 
+            double x = GPSTrackActivity.XX;
+            double y = GPSTrackActivity.YY;
+            arr = MCoordToWCoord(x, y);
 
-            arr = MCoordToWCoord(preCoord[0], preCoord[1]);
+            wx = (int) arr[0];
+            wy = (int) arr[1];
 
-            wx = (float) arr[0];
-            wy = (float) arr[1];
-
-            canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+            canvas.drawBitmap(dingweiBitmap, wx - 8, wy - 8, null);
+        }
+        if (GPSTrackActivity.DISPLAY)//如果开启了轨迹显示
+        {
+            for (int i = 0; i < GPSTrackActivity.displayList.size(); i++)// 绘制以往位置点到为图上
+            {
+                preCoord = GPSTrackActivity.displayList.get(i);
+                arr = MCoordToWCoord(preCoord[0], preCoord[1]);
+                wx = (int) arr[0];
+                wy = (int) arr[1];
+                canvas.drawBitmap(displayBitmap, wx - 8, wy - 8, null);
+            }
         }
     }
 }
