@@ -24,7 +24,7 @@ import static com.example.wanghanqing.godbless.Values.LIBPATH;
 
 public class GPSTrackActivity extends Activity {
 
-    public static boolean DISPLAY;// 轨迹显示开关
+    //public static boolean DISPLAY;// 轨迹显示开关
     public static java.util.ArrayList<double[]> displayList;// 读取的轨迹坐标记录
     public static boolean FLAG;// 轨迹记录开关
     public static int COUNT;// 定位点个数
@@ -64,7 +64,7 @@ public class GPSTrackActivity extends Activity {
         aoMap2.openMap(GPJPATH);
         mapView2.setMap(aoMap2);//指定mapView显示map代表的地图文件
 
-        bcgj = (Button) this.findViewById(R.id.bcgj);
+        bcgj = (Button)findViewById(R.id.bcgj);
         bcgj.setOnClickListener(new BCGJListener());
 
         //定位模块
@@ -81,11 +81,11 @@ public class GPSTrackActivity extends Activity {
         locationManager2.requestLocationUpdates(provider2, 1000, 10, locationListener);
 
 
-        int ids[] = new int[1];
-        GeoClassType geoClassType[] = new GeoClassType[1];
+        //int ids[] = new int[1];
+        //GeoClassType geoClassType[] = new GeoClassType[1];
 
-        ids[0] = 1;
-        geoClassType[0] = GeoClassType.POLYGON;
+        //ids[0] = 1;
+        //geoClassType[0] = GeoClassType.POLYGON;
         workSpace2 = aoMap2.getWorkSpace();
 
 
@@ -118,15 +118,7 @@ public class GPSTrackActivity extends Activity {
         mapView2.updateView();
 
 
-//        for (int i = 0; i < 1000; i++) {
-//
-//
-//            updateWithNewLocation(location2);
-//
-//            mapView2.x = XX;
-//            mapView2.y = YY;
-//            mapView2.updateView();
-//        }
+
     }
 
 
@@ -137,7 +129,7 @@ public class GPSTrackActivity extends Activity {
         @Override
         public void onClick(View v) {
             if (!FLAG) {
-                // 如果轨迹功能没有开启。
+                // 如果轨迹功能开启。
                 if (Utils.GPSisOPen(getApplicationContext())) {
                     if (location2 != null) {
                         FLAG = true;
@@ -182,10 +174,6 @@ public class GPSTrackActivity extends Activity {
 
             }
 
-            // 创建TXT示例代码
-            // if (Values.saveTrace(Values.TRACEPATH, "abcdefg"))
-            // Toast.makeText(MainActivity.this, "保存成功", Toast.LENGTH_SHORT)
-            // .show();
         }
     }
 
@@ -237,8 +225,8 @@ public class GPSTrackActivity extends Activity {
     private final LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            MainActivity.location = location;
-            updateWithNewLocation(location);
+            location2 = location;
+            updateWithNewLocation(location2);
             mapView2.updateView();
 
         }

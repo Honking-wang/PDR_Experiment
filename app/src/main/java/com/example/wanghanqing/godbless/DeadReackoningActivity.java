@@ -21,8 +21,13 @@ import static com.example.wanghanqing.godbless.Values.LIBPATH;
 public class DeadReackoningActivity extends AppCompatActivity {
 
 
-    public float len=0.7f;
+    public float len = 0.7f;
+    public static int count;
     public int step;
+
+    public static double X=39443571;
+    public static double Y=4429844;
+
     private float[] accelerometerValues = new float[3];
     private float[] magneticfieldValues = new float[3];
     float[] r = new float[9];//旋转矩阵
@@ -108,17 +113,12 @@ public class DeadReackoningActivity extends AppCompatActivity {
             if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
                 if (sensorEvent.values[0] == 1.0) {
                     step++;
-                    for (int i = 0; i < num; i++) {
-                        orient0 = orient0 + orientList.get(i);
-                    }
-                    orient0 = orient0 / num;
 
 
-
+                    updatePDRView(orientList, num);
                     orientList = new ArrayList();
                     num = 0;
                     orient0 = 0;
-
 
                 } else {
                     orientList.add(orient);
@@ -139,6 +139,21 @@ public class DeadReackoningActivity extends AppCompatActivity {
         @Override
         public void onAccuracyChanged(Sensor sensor, int i) {
 
+
         }
+    }
+
+    public void updatePDRView(ArrayList<Float> arrayList, int num) {
+        for (int i = 0; i < num; i++) {
+            orient0 = orient0 + arrayList.get(i);
+        }
+        orient0 = orient0 / num;
+
+        orient0 = (float) (orient0 * Math.PI / 180);
+
+        X += len * Math.cos((5 * Math.PI / 2) - orient0);
+        Y += len * Math.sin((5 * Math.PI / 2) - orient0);
+
+
     }
 }

@@ -177,7 +177,7 @@ public class PDRTrackActivity extends Activity {
 
 
             if (step != stepold) {
-                mapView3.addPoint(orient);
+                //mapView3.addPoint(orient);
                 mapView3.updateView();
                 stepold = step;
             }
