@@ -8,6 +8,7 @@ import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 
 import com.AoGIS.database.AoMap;
@@ -21,12 +22,12 @@ import static com.example.wanghanqing.godbless.Values.LIBPATH;
 public class DeadReackoningActivity extends AppCompatActivity {
 
 
-    public float len = 0.7f;
+    public float len = 7.0f;
     public static int count;
     public int step;
 
     public static double X=39443571;
-    public static double Y=4429844;
+    public static double Y=4429854;//4429844
 
     private float[] accelerometerValues = new float[3];
     private float[] magneticfieldValues = new float[3];
@@ -55,6 +56,7 @@ public class DeadReackoningActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_deadreackoning);
 
         //打开地图
@@ -91,6 +93,7 @@ public class DeadReackoningActivity extends AppCompatActivity {
         public void onClick(View view) {
             if (!flag) {
                 flag = true;
+                pdrstart.setText("轨迹关闭");
                 sensorManager.registerListener(mySensorEventListener, sensor_ACCELEROMETER, SensorManager.SENSOR_DELAY_FASTEST);
                 sensorManager.registerListener(mySensorEventListener, sensor_MAGNETIC, SensorManager.SENSOR_DELAY_FASTEST);
                 sensorManager.registerListener(mySensorEventListener, sensor_DETECTOR, SensorManager.SENSOR_DELAY_FASTEST);
@@ -99,6 +102,7 @@ public class DeadReackoningActivity extends AppCompatActivity {
                 sensorManager.unregisterListener(mySensorEventListener, sensor_ACCELEROMETER);
                 sensorManager.unregisterListener(mySensorEventListener, sensor_DETECTOR);
                 sensorManager.unregisterListener(mySensorEventListener, sensor_MAGNETIC);
+                pdrstart.setText("轨迹开启");
             }
         }
     }

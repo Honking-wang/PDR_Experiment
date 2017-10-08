@@ -83,7 +83,7 @@ public class AoPDRView extends AoView {
         canvas = new Canvas(bitmap);
         // 进行轨迹点绘制
         if (DeadReackoningActivity.flag) {
-            if (DeadReackoningActivity.count!= 0) {
+            if (DeadReackoningActivity.count != 0) {
                 preCoord = List.get(DeadReackoningActivity.count - 1);// 判断是否和上一个点的坐标一样
                 if ((preCoord[0] != DeadReackoningActivity.X)
                         || (preCoord[1] != DeadReackoningActivity.Y)) {
@@ -114,15 +114,15 @@ public class AoPDRView extends AoView {
                         DeadReackoningActivity.Y});// 将当前位置点添加到List中
                 DeadReackoningActivity.count = DeadReackoningActivity.count + 1;// 计数器+1
 
-//                for (int i = 0; i < GPSTrackActivity.COUNT; i++)// 绘制以往位置点到为图上
-//                {
-                preCoord = List.get(0);
-                arr = MCoordToWCoord(preCoord[0], preCoord[1]);
-                wx = (int) arr[0];
-                wy = (int) arr[1];
-                canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+                for (int i = 0; i < GPSTrackActivity.COUNT; i++)// 绘制以往位置点到为图上
+                {
+                    preCoord = List.get(0);
+                    arr = MCoordToWCoord(preCoord[0], preCoord[1]);
+                    wx = (int) arr[0];
+                    wy = (int) arr[1];
+                    canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
 
-//                }
+                }
             }
             double x = DeadReackoningActivity.X;
             double y = DeadReackoningActivity.Y;
