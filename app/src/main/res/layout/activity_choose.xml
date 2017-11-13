@@ -23,11 +23,7 @@
         android:layout_height="wrap_content"
         android:text="轨迹记录方式" />
 
-    <CheckBox
-        android:id="@+id/GPS"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/GPStrack" />
+
 
     <CheckBox
         android:id="@+id/PDR"

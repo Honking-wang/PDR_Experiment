@@ -82,15 +82,15 @@ public class AoPDRView extends AoView {
         super.onUserBitmapDraw(bitmap);
         canvas = new Canvas(bitmap);
         // 进行轨迹点绘制
-        if (DeadReackoningActivity.flag) {
-            if (DeadReackoningActivity.count != 0) {
-                preCoord = List.get(DeadReackoningActivity.count - 1);// 判断是否和上一个点的坐标一样
-                if ((preCoord[0] != DeadReackoningActivity.X)
-                        || (preCoord[1] != DeadReackoningActivity.Y)) {
-                    List.add(DeadReackoningActivity.count, new double[]{DeadReackoningActivity.X,
-                            DeadReackoningActivity.Y});// 将当前位置点添加到List中
-                    DeadReackoningActivity.count = DeadReackoningActivity.count + 1;// 计数器+1
-                    for (int i = 0; i < DeadReackoningActivity.count; i++)// 绘制以往位置点到为图上
+        if (DeadReackoning2Activity.flag) {
+            if (DeadReackoning2Activity.count != 0) {
+                preCoord = List.get(DeadReackoning2Activity.count - 1);// 判断是否和上一个点的坐标一样
+                if ((preCoord[0] != DeadReackoning2Activity.X)
+                        || (preCoord[1] != DeadReackoning2Activity.Y)) {
+                    List.add(DeadReackoning2Activity.count, new double[]{DeadReackoning2Activity.X,
+                            DeadReackoning2Activity.Y});// 将当前位置点添加到List中
+                    DeadReackoning2Activity.count = DeadReackoning2Activity.count + 1;// 计数器+1
+                    for (int i = 0; i < DeadReackoning2Activity.count; i++)// 绘制以往位置点到为图上
                     {
                         preCoord = List.get(i);
                         arr = MCoordToWCoord(preCoord[0], preCoord[1]);
@@ -99,7 +99,7 @@ public class AoPDRView extends AoView {
                         canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
                     }
                 } else {
-                    for (int i = 0; i < DeadReackoningActivity.count; i++)// 绘制以往位置点到为图上
+                    for (int i = 0; i < DeadReackoning2Activity.count; i++)// 绘制以往位置点到为图上
                     {
                         preCoord = List.get(i);
                         arr = MCoordToWCoord(preCoord[0], preCoord[1]);
@@ -110,11 +110,11 @@ public class AoPDRView extends AoView {
                 }
 
             } else {
-                List.add(DeadReackoningActivity.count, new double[]{DeadReackoningActivity.X,
-                        DeadReackoningActivity.Y});// 将当前位置点添加到List中
-                DeadReackoningActivity.count = DeadReackoningActivity.count + 1;// 计数器+1
+                List.add(DeadReackoning2Activity.count, new double[]{DeadReackoning2Activity.X,
+                        DeadReackoning2Activity.Y});// 将当前位置点添加到List中
+                DeadReackoning2Activity.count = DeadReackoning2Activity.count + 1;// 计数器+1
 
-                for (int i = 0; i < GPSTrackActivity.COUNT; i++)// 绘制以往位置点到为图上
+                for (int i = 0; i < DeadReackoning2Activity.count; i++)// 绘制以往位置点到为图上
                 {
                     preCoord = List.get(0);
                     arr = MCoordToWCoord(preCoord[0], preCoord[1]);
@@ -124,15 +124,15 @@ public class AoPDRView extends AoView {
 
                 }
             }
-            double x = DeadReackoningActivity.X;
-            double y = DeadReackoningActivity.Y;
+            double x = DeadReackoning2Activity.X;
+            double y = DeadReackoning2Activity.Y;
             arr = MCoordToWCoord(x, y);
             wx = (int) arr[0];
             wy = (int) arr[1];
             canvas.drawBitmap(dingweiBitmap, wx - 8, wy - 8, null);
         } else {
             // 只绘制定位点
-            DeadReackoningActivity.count = 0;
+            DeadReackoning2Activity.count = 0;
             List.clear();
             paint.setColor(Color.BLUE);
             paint.setAlpha(200);
@@ -142,8 +142,8 @@ public class AoPDRView extends AoView {
             paint.setStrokeWidth(5);
             // 画圆
 
-            double x = DeadReackoningActivity.X;
-            double y = DeadReackoningActivity.Y;
+            double x = DeadReackoning2Activity.X;
+            double y = DeadReackoning2Activity.Y;
             arr = MCoordToWCoord(x, y);
 
             wx = (int) arr[0];

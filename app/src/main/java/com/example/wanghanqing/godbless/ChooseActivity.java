@@ -15,7 +15,6 @@ public class ChooseActivity extends AppCompatActivity {
 
     private boolean locflag;
     private boolean senflag;
-    private boolean gpstrackflag;
     private boolean pdrtrackflag;
 
     public static int jibuqi;
@@ -23,7 +22,6 @@ public class ChooseActivity extends AppCompatActivity {
 
     private CheckBox locate;
     private CheckBox sensor;
-    private CheckBox gpstrack;
     private CheckBox pdrtrack;
 
     private RadioGroup dx1;
@@ -43,7 +41,6 @@ public class ChooseActivity extends AppCompatActivity {
 
         locate = (CheckBox) findViewById(R.id.locatebox);
         sensor = (CheckBox) findViewById(R.id.sensorbox);
-        gpstrack = (CheckBox) findViewById(R.id.GPS);
         pdrtrack = (CheckBox) findViewById(R.id.PDR);
         dx1 = (RadioGroup) findViewById(R.id.dx1);
         dx2 = (RadioGroup) findViewById(R.id.dx2);
@@ -80,18 +77,6 @@ public class ChooseActivity extends AppCompatActivity {
             }
         });
 
-        gpstrack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!gpstrackflag) {
-                    Intent intent = new Intent(ChooseActivity.this, GPSTrackActivity.class);
-                    startActivity(intent);
-                    gpstrackflag = true;
-                } else {
-                    gpstrackflag = false;
-                }
-            }
-        });
 
         pdrtrack.setOnClickListener(new PDRClickListener());
 
@@ -101,7 +86,7 @@ public class ChooseActivity extends AppCompatActivity {
                 if (jibuqi == 0 || suanfa == 0) {
                     Toast.makeText(ChooseActivity.this, "请选择记步方式和算法", Toast.LENGTH_SHORT).show();
                 }else{
-                    Intent intent = new Intent(ChooseActivity.this, DeadReackoningActivity.class);
+                    Intent intent = new Intent(ChooseActivity.this, PDRTrackActivity.class);
                     startActivity(intent);
                 }
             }

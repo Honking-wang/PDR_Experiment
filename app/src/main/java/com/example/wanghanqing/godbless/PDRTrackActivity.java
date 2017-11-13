@@ -20,7 +20,7 @@ import static com.example.wanghanqing.godbless.Values.LIBPATH;
 public class PDRTrackActivity extends Activity {
 
 
-  // public static double[] e;
+    // public static double[] e;
 
     public float orient;
 
@@ -123,30 +123,21 @@ public class PDRTrackActivity extends Activity {
         myPDRSensorEventListener = new MyPDRSensorEventListener();
 
 
-
         mapView3.updateView();
 
-        getStep(ChooseActivity.jibuqi);
-        getOrient();
+        getStep();
+
 
     }
 
 
-    public void getStep(int i) {
-        if (i == 1) {
-            sensorManager.registerListener(myPDRSensorEventListener, sensorDet, SensorManager.SENSOR_DELAY_FASTEST);
+    public void getStep() {
 
-        } else if (i == 2) {
-            sensorManager.registerListener(myPDRSensorEventListener, sensorAcc, SensorManager.SENSOR_DELAY_FASTEST);
-        }
-
-    }
-
-    public void getOrient() {
+        sensorManager.registerListener(myPDRSensorEventListener, sensorDet, SensorManager.SENSOR_DELAY_FASTEST);
         sensorManager.registerListener(myPDRSensorEventListener, sensorAcc, SensorManager.SENSOR_DELAY_FASTEST);
-        sensorManager.registerListener(myPDRSensorEventListener, sensorMag, SensorManager.SENSOR_DELAY_FASTEST);
-    }
 
+
+    }
 
     class MyPDRSensorEventListener implements SensorEventListener {
         @Override
@@ -161,25 +152,6 @@ public class PDRTrackActivity extends Activity {
                 average = (float) Math.sqrt(Math.pow(sensorEvent.values[0], 2) + Math.pow(sensorEvent.values[1], 2)
                         + Math.pow(sensorEvent.values[2], 2));
                 detectorNewStep(average);
-            }
-            if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
-                magneticfieldValues = sensorEvent.values.clone();
-            }
-            if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
-                magneticfieldValues = sensorEvent.values.clone();
-            }
-            SensorManager.getRotationMatrix(r, null, accelerometerValues, magneticfieldValues);
-            SensorManager.getOrientation(r, values);
-            orient = (float) Math.toDegrees(values[0]);
-            if (orient < 0) {
-                orient += 360;
-            }
-
-
-            if (step != stepold) {
-                //mapView3.addPoint(orient);
-                mapView3.updateView();
-                stepold = step;
             }
 
         }
