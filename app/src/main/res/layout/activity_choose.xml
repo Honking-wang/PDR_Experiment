@@ -9,7 +9,7 @@
         android:id="@+id/locatebox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="查看地图" />
+        android:text="原始PDR" />
 
     <CheckBox
         android:id="@+id/sensorbox"

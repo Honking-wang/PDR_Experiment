@@ -11,6 +11,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.wanghanqing.godbless.activity.PDRTrackActivity;
+
 public class ChooseActivity extends AppCompatActivity {
 
     private boolean locflag;
@@ -55,7 +57,7 @@ public class ChooseActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!locflag) {
 
-                    Intent intent = new Intent(ChooseActivity.this, DeadReackoningActivity.class);
+                    Intent intent = new Intent(ChooseActivity.this, PDRTrackActivity.class);
                     startActivity(intent);
                     locflag = true;
                 } else {
@@ -86,7 +88,7 @@ public class ChooseActivity extends AppCompatActivity {
                 if (jibuqi == 0 || suanfa == 0) {
                     Toast.makeText(ChooseActivity.this, "请选择记步方式和算法", Toast.LENGTH_SHORT).show();
                 }else{
-                    Intent intent = new Intent(ChooseActivity.this, PDRTrackActivity.class);
+                    Intent intent = new Intent(ChooseActivity.this, PDRTrackoldActivity.class);
                     startActivity(intent);
                 }
             }

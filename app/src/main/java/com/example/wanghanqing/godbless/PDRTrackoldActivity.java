@@ -13,11 +13,12 @@ import android.os.Bundle;
 import com.AoGIS.database.AoMap;
 import com.AoGIS.database.WorkSpace;
 import com.AoGIS.render.AoSysLib;
+import com.example.wanghanqing.godbless.view.AoPDRView;
 
-import static com.example.wanghanqing.godbless.Values.GPJPATH;
-import static com.example.wanghanqing.godbless.Values.LIBPATH;
+import static com.example.wanghanqing.godbless.values.Values.GPJPATH;
+import static com.example.wanghanqing.godbless.values.Values.LIBPATH;
 
-public class PDRTrackActivity extends Activity {
+public class PDRTrackoldActivity extends Activity {
 
 
     // public static double[] e;

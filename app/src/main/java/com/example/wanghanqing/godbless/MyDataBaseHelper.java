@@ -15,7 +15,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
 
 
-//    public static final String ptable="create table"+DeadReackoning2Activity.name
+//    public static final String ptable="create table"+PDRTrackActivity.name
 //            +"(id integer autoincrement,"
 //            +"time text,step integer,orient real,mag1 real,mag2 real,mag3 real,acc1 real,"
 //            +"acc2 real,acc3 real)";

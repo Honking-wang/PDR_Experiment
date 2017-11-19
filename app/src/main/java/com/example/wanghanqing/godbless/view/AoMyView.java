@@ -1,4 +1,4 @@
-package com.example.wanghanqing.godbless;
+package com.example.wanghanqing.godbless.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -6,91 +6,114 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 
 import com.AoGIS.render.AoView;
+import com.example.wanghanqing.godbless.MainActivity;
+import com.example.wanghanqing.godbless.R;
 
 import java.util.ArrayList;
 
 /**
- * Created by wanghanqing on 2017/7/18.
+ * Created by wanghanqing on 2017/6/21.
  */
 
-public class AoPDRView extends AoView {
+public class AoMyView extends AoView {
 
 
     private double[] preCoord;
     private Bitmap dingweiBitmap;
     private Bitmap guijidianBitmap;
-    //private Bitmap displayBitmap;
+    private Bitmap displayBitmap;
     public static ArrayList<double[]> List;// 存放轨迹点坐标的List
     private Canvas canvas;
     private float[] arr;// 用于坐标转换的x、y坐标值
-    //    public double x = 39443571;
-//    public double y = 4429844;
-    public float wx;// 坐标转换后的x
-    public float wy;// 坐标转换后的y
+    private int wx;// 坐标转换后的x
+    private int wy;// 坐标转换后的y
 
 
-    android.graphics.Paint paint = new android.graphics.Paint();
+    public static ArrayList<double[]> PDRList;
+    public double mPDRx;
+    public double mPDRy;
+    private int wPDRx;// 坐标转换后的x
+    private int wPDRy;// 坐标转换后的y
 
-    public AoPDRView(Context context) {
+    public AoMyView(Context context) {
         super(context);
         BitmapFactory bf = new BitmapFactory();
         preCoord = new double[2];
         List = new ArrayList<double[]>();
-//        List.add(new double[]{x, y});
+        PDRList = new ArrayList<double[]>();
         dingweiBitmap = bf.decodeResource(getResources(), R.drawable.dingwei);
         guijidianBitmap = bf.decodeResource(getResources(),
                 R.drawable.guijidian);
-//        displayBitmap = bf.decodeResource(getResources(),
-//                R.drawable.display);
+        displayBitmap = bf.decodeResource(getResources(),
+                R.drawable.display);
 
     }
 
-    public AoPDRView(Context context, AttributeSet attrs, int defStyle) {
+    public AoMyView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         BitmapFactory bf = new BitmapFactory();
         preCoord = new double[2];
         List = new java.util.ArrayList<double[]>();
-//        List.add(new double[]{x, y});
+        PDRList = new ArrayList<double[]>();
         dingweiBitmap = bf.decodeResource(getResources(), R.drawable.dingwei);
         guijidianBitmap = bf.decodeResource(getResources(),
                 R.drawable.guijidian);
-//        displayBitmap = bf.decodeResource(getResources(),
-//                R.drawable.display);
+        displayBitmap = bf.decodeResource(getResources(),
+                R.drawable.display);
 
     }
 
-    public AoPDRView(Context context, AttributeSet attrs) {
+    public AoMyView(Context context, AttributeSet attrs) {
         super(context, attrs);
         BitmapFactory bf = new BitmapFactory();
         preCoord = new double[2];
         List = new java.util.ArrayList<double[]>();
-//        List.add(new double[]{x, y});
+        PDRList = new ArrayList<double[]>();
         dingweiBitmap = bf.decodeResource(getResources(), R.drawable.dingwei);
         guijidianBitmap = bf.decodeResource(getResources(),
                 R.drawable.guijidian);
-//        displayBitmap = bf.decodeResource(getResources(),
-//                R.drawable.display);
-
+        displayBitmap = bf.decodeResource(getResources(),
+                R.drawable.display);
 
     }
 
+    android.graphics.Paint paint = new android.graphics.Paint();
+
+    public void addPoint() {
+        PDRList.add(new double[]{mPDRx, mPDRy});
+    }
+
+    public void autoAddPoint(float stepLen, float orient) {
+        mPDRx += stepLen * Math.sin(Math.toRadians(orient));
+        mPDRy += stepLen * Math.cos(Math.toRadians(orient));
+        PDRList.add(new double[]{mPDRx, mPDRy});
+    }
 
     public void onUserBitmapDraw(Bitmap bitmap) {
         super.onUserBitmapDraw(bitmap);
         canvas = new Canvas(bitmap);
         // 进行轨迹点绘制
-        if (DeadReackoning2Activity.flag) {
-            if (DeadReackoning2Activity.count != 0) {
-                preCoord = List.get(DeadReackoning2Activity.count - 1);// 判断是否和上一个点的坐标一样
-                if ((preCoord[0] != DeadReackoning2Activity.X)
-                        || (preCoord[1] != DeadReackoning2Activity.Y)) {
-                    List.add(DeadReackoning2Activity.count, new double[]{DeadReackoning2Activity.X,
-                            DeadReackoning2Activity.Y});// 将当前位置点添加到List中
-                    DeadReackoning2Activity.count = DeadReackoning2Activity.count + 1;// 计数器+1
-                    for (int i = 0; i < DeadReackoning2Activity.count; i++)// 绘制以往位置点到为图上
+        if (!MainActivity.pdrtrackflag) {
+            for (int i = 0; i < PDRList.size(); i++) {
+                preCoord = PDRList.get(i);
+                arr = MCoordToDCoord(preCoord[0], preCoord[1]);
+                wPDRx = (int) arr[0];
+                wPDRy = (int) arr[1];
+                canvas.drawBitmap(guijidianBitmap, wPDRx - 8, wPDRy - 8, null);
+            }
+        }
+
+        if (MainActivity.gpstrackflag) {
+            if (MainActivity.gpsCOUNT != 0) {
+                preCoord = List.get(MainActivity.gpsCOUNT - 1);// 判断是否和上一个点的坐标一样
+                if ((preCoord[0] != MainActivity.X)
+                        || (preCoord[1] != MainActivity.Y)) {
+                    List.add(MainActivity.gpsCOUNT, new double[]{MainActivity.X,
+                            MainActivity.Y});// 将当前位置点添加到List中
+                    MainActivity.gpsCOUNT = MainActivity.gpsCOUNT + 1;// 计数器+1
+                    for (int i = 0; i < MainActivity.gpsCOUNT; i++)// 绘制以往位置点到为图上
                     {
                         preCoord = List.get(i);
                         arr = MCoordToWCoord(preCoord[0], preCoord[1]);
@@ -99,7 +122,7 @@ public class AoPDRView extends AoView {
                         canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
                     }
                 } else {
-                    for (int i = 0; i < DeadReackoning2Activity.count; i++)// 绘制以往位置点到为图上
+                    for (int i = 0; i < MainActivity.gpsCOUNT; i++)// 绘制以往位置点到为图上
                     {
                         preCoord = List.get(i);
                         arr = MCoordToWCoord(preCoord[0], preCoord[1]);
@@ -110,13 +133,13 @@ public class AoPDRView extends AoView {
                 }
 
             } else {
-                List.add(DeadReackoning2Activity.count, new double[]{DeadReackoning2Activity.X,
-                        DeadReackoning2Activity.Y});// 将当前位置点添加到List中
-                DeadReackoning2Activity.count = DeadReackoning2Activity.count + 1;// 计数器+1
+                List.add(MainActivity.gpsCOUNT, new double[]{MainActivity.X,
+                        MainActivity.Y});// 将当前位置点添加到List中
+                MainActivity.gpsCOUNT = MainActivity.gpsCOUNT + 1;// 计数器+1
 
-                for (int i = 0; i < DeadReackoning2Activity.count; i++)// 绘制以往位置点到为图上
+                for (int i = 0; i < MainActivity.gpsCOUNT; i++)// 绘制以往位置点到为图上
                 {
-                    preCoord = List.get(0);
+                    preCoord = List.get(i);
                     arr = MCoordToWCoord(preCoord[0], preCoord[1]);
                     wx = (int) arr[0];
                     wy = (int) arr[1];
@@ -124,15 +147,15 @@ public class AoPDRView extends AoView {
 
                 }
             }
-            double x = DeadReackoning2Activity.X;
-            double y = DeadReackoning2Activity.Y;
+            double x = MainActivity.X;
+            double y = MainActivity.Y;
             arr = MCoordToWCoord(x, y);
             wx = (int) arr[0];
             wy = (int) arr[1];
             canvas.drawBitmap(dingweiBitmap, wx - 8, wy - 8, null);
         } else {
             // 只绘制定位点
-            DeadReackoning2Activity.count = 0;
+            //MainActivity.COUNT = 0;
             List.clear();
             paint.setColor(Color.BLUE);
             paint.setAlpha(200);
@@ -142,8 +165,8 @@ public class AoPDRView extends AoView {
             paint.setStrokeWidth(5);
             // 画圆
 
-            double x = DeadReackoning2Activity.X;
-            double y = DeadReackoning2Activity.Y;
+            double x = MainActivity.X;
+            double y = MainActivity.Y;
             arr = MCoordToWCoord(x, y);
 
             wx = (int) arr[0];
@@ -153,8 +176,4 @@ public class AoPDRView extends AoView {
         }
     }
 }
-
-
-
-
 

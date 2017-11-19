@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.wanghanqing.godbless.values.Values;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -55,7 +57,6 @@ public class SensorActivity extends AppCompatActivity {
     private TextView gyro_uncaTextView;
     private TextView accTextView;
     private TextView magTextView;
-    //private TextView gpsTextView;
     private TextView steTextView;
 
     private SensorManager sensorManager = null;
@@ -86,7 +87,6 @@ public class SensorActivity extends AppCompatActivity {
         ori2TextView = (TextView) findViewById(R.id.orient2);
         gyroTextView = (TextView) findViewById(R.id.gyro);
         gyro_uncaTextView = (TextView) findViewById(R.id.gyro2);
-        //gpsTextView = (TextView) findViewById(R.id.gpsnum);
         accTextView = (TextView) findViewById(R.id.acc);
         magTextView = (TextView) findViewById(R.id.magn);
         steTextView = (TextView) this.findViewById(R.id.step);

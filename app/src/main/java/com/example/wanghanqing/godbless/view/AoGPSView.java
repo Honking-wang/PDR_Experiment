@@ -1,4 +1,4 @@
-package com.example.wanghanqing.godbless;
+package com.example.wanghanqing.godbless.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 
 import com.AoGIS.render.AoView;
+import com.example.wanghanqing.godbless.activity.GPSTrackActivity;
+import com.example.wanghanqing.godbless.R;
 
 import java.util.ArrayList;
 
@@ -87,10 +89,10 @@ public class AoGPSView extends AoView {
                 //获取到list里最新的点
                 preCoord = List.get(GPSTrackActivity.COUNT - 1);
                 // 判断是否和上一个点的坐标一样
-                if ((preCoord[0] != GPSTrackActivity.XX)
-                        || (preCoord[1] != GPSTrackActivity.YY)) {
-                    List.add(GPSTrackActivity.COUNT, new double[]{GPSTrackActivity.XX,
-                            GPSTrackActivity.YY});// 将当前位置点添加到List中，index为count的位置
+                if ((preCoord[0] != GPSTrackActivity.GX)
+                        || (preCoord[1] != GPSTrackActivity.GY)) {
+                    List.add(GPSTrackActivity.COUNT, new double[]{GPSTrackActivity.GX,
+                            GPSTrackActivity.GY});// 将当前位置点添加到List中，index为count的位置
                     GPSTrackActivity.COUNT = GPSTrackActivity.COUNT + 1;// 计数器+1
                     for (int i = 0; i < GPSTrackActivity.COUNT; i++)// 绘制以往位置点到为图上
                     {
@@ -112,8 +114,8 @@ public class AoGPSView extends AoView {
                 }
 
             } else {
-                List.add(GPSTrackActivity.COUNT, new double[]{GPSTrackActivity.XX,
-                        GPSTrackActivity.YY});// 将当前位置点添加到List中
+                List.add(GPSTrackActivity.COUNT, new double[]{GPSTrackActivity.GX,
+                        GPSTrackActivity.GY});// 将当前位置点添加到List中
                 GPSTrackActivity.COUNT = GPSTrackActivity.COUNT + 1;// 计数器+1
 
                 for (int i = 0; i < GPSTrackActivity.COUNT; i++)// 绘制以往位置点到为图上
@@ -126,8 +128,8 @@ public class AoGPSView extends AoView {
 
                 }
             }
-            double x = GPSTrackActivity.XX;
-            double y = GPSTrackActivity.YY;
+            double x = GPSTrackActivity.GX;
+            double y = GPSTrackActivity.GY;
             arr = MCoordToWCoord(x, y);
             wx = (int) arr[0];
             wy = (int) arr[1];
@@ -144,8 +146,8 @@ public class AoGPSView extends AoView {
             paint.setStrokeWidth(5);
             // 画圆
 
-            double x = GPSTrackActivity.XX;
-            double y = GPSTrackActivity.YY;
+            double x = GPSTrackActivity.GX;
+            double y = GPSTrackActivity.GY;
             arr = MCoordToWCoord(x, y);
 
             wx = (int) arr[0];

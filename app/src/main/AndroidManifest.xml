@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PrimeActivity">
+        <activity android:name=".activity.PrimeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,10 +24,9 @@
         <activity android:name=".ChooseActivity" />
         <activity android:name=".SensorActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".GPSTrackActivity" />
-        <activity android:name=".PDRTrackActivity" />
-        <activity android:name=".DeadReackoningActivity" />
-        <activity android:name=".DeadReackoning2Activity" />
+        <activity android:name=".activity.GPSTrackActivity" />
+        <activity android:name=".PDRTrackoldActivity" />
+        <activity android:name=".activity.PDRTrackActivity" />
 
     </application>
 

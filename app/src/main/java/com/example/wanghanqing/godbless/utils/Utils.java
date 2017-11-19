@@ -1,4 +1,4 @@
-package com.example.wanghanqing.godbless;
+package com.example.wanghanqing.godbless.utils;
 
 import android.app.PendingIntent;
 import android.content.Context;

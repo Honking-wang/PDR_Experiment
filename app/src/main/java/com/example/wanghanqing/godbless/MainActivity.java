@@ -25,10 +25,11 @@ import com.AoGIS.database.WorkSpace;
 import com.AoGIS.geometry.GeoClassType;
 import com.AoGIS.location.ProjectionHelper;
 import com.AoGIS.render.AoSysLib;
+import com.example.wanghanqing.godbless.view.AoMyView;
 
 
-import static com.example.wanghanqing.godbless.Values.GPJPATH;
-import static com.example.wanghanqing.godbless.Values.LIBPATH;
+import static com.example.wanghanqing.godbless.values.Values.GPJPATH;
+import static com.example.wanghanqing.godbless.values.Values.LIBPATH;
 
 public class MainActivity extends AppCompatActivity {
     public static double X;

@@ -6,10 +6,10 @@
 
 
     <Button
-        android:id="@+id/cjdb"
+        android:id="@+id/creatb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="创建新数据库" />
+        android:text="新建数据表" />
 
     <Button
         android:id="@+id/xzdb"

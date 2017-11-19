@@ -1,7 +1,7 @@
-package com.example.wanghanqing.godbless;
+package com.example.wanghanqing.godbless.activity;
 
 import android.content.Context;
-import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -12,20 +12,22 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.AoGIS.database.AoMap;
 import com.AoGIS.render.AoSysLib;
+import com.example.wanghanqing.godbless.R;
+import com.example.wanghanqing.godbless.values.Values;
+import com.example.wanghanqing.godbless.view.AoPDRView;
 
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.example.wanghanqing.godbless.Values.GPJPATH;
-import static com.example.wanghanqing.godbless.Values.LIBPATH;
+import static com.example.wanghanqing.godbless.values.Values.GPJPATH;
+import static com.example.wanghanqing.godbless.values.Values.LIBPATH;
 
-public class DeadReackoning2Activity extends AppCompatActivity {
+public class PDRTrackActivity extends AppCompatActivity {
 
     private float gyro1;
     private float gyro2;
@@ -61,12 +63,14 @@ public class DeadReackoning2Activity extends AppCompatActivity {
 
     private MySensorEventListener mySensorEventListener;
 
+    public SQLiteDatabase dbPDR;
+
     public double len = 0.7;
     public static int count;
     public int step;
     public static String name;
-    public static double X = 39443601;
-    public static double Y = 4429854;
+    public static double PX = 39443601;
+    public static double PY = 4429854;
     private float[] accelerometerValues = new float[3];
     private float[] magneticfieldValues = new float[3];
     float[] r = new float[9];//旋转矩阵
@@ -79,9 +83,6 @@ public class DeadReackoning2Activity extends AppCompatActivity {
     public static AoMap aodrMap;
     public Button pdrstart;
 
-    private MyDataBaseHelper myDataBaseHelper;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +92,6 @@ public class DeadReackoning2Activity extends AppCompatActivity {
         //打开地图
         AoSysLib.loadLib(LIBPATH);
         drView = (AoPDRView) findViewById(R.id.dr_mapview2);
-
         drView.setActivity(this);
         aodrMap = new AoMap();
         aodrMap.openMap(GPJPATH);
@@ -102,10 +102,6 @@ public class DeadReackoning2Activity extends AppCompatActivity {
         drView.zoomView(-480, 800, 6);
         drView.updateView();
         pdrstart = (Button) findViewById(R.id.pdrstart2);
-
-
-
-
 
         timTextView = (TextView) this.findViewById(R.id.timed2);
         oriTextView = (TextView) this.findViewById(R.id.orientd2);
@@ -125,12 +121,7 @@ public class DeadReackoning2Activity extends AppCompatActivity {
 
         pdrstart.setOnClickListener(new PDRstartListener());
 
-
-
-        Intent intent=getIntent();
-        name=intent.getStringExtra("data");
-
-        myDataBaseHelper=new MyDataBaseHelper(DeadReackoning2Activity.this,"IceCream.db",null,1);
+        dbPDR = SQLiteDatabase.openOrCreateDatabase(Values.SENSORPATH + "PDRData.db3", null);
     }
 
 
@@ -138,7 +129,6 @@ public class DeadReackoning2Activity extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            myDataBaseHelper.getReadableDatabase();
             if (!flag) {
                 flag = true;
                 pdrstart.setText("轨迹关闭");
@@ -166,8 +156,8 @@ public class DeadReackoning2Activity extends AppCompatActivity {
                     points[i * 2 + 1] = zuobiao[1];
                 }
                 // 加入当前点
-                points[2 * count] = X;
-                points[2 * count + 1] = Y;
+                points[2 * count] = PX;
+                points[2 * count + 1] = PY;
 
                 StringBuffer stringBuffer = new StringBuffer();
 
@@ -203,10 +193,12 @@ public class DeadReackoning2Activity extends AppCompatActivity {
                     steTextView.setText("" + step);
                     orient1 = (float) (orient * Math.PI / 180);
 
-                    X = X + len * Math.cos((5 * Math.PI / 2) - orient1);
-                    Y = Y + len * Math.sin((5 * Math.PI / 2) - orient1);
+                    PX = PX + len * Math.cos((5 * Math.PI / 2) - orient1);
+                    PY = PY + len * Math.sin((5 * Math.PI / 2) - orient1);
+                    insertpdrtodb(dbPDR, PX, PY);
+                    //dbPDR.execSQL("insert into " + PrimeActivity.tableName + " ( PX , PY ) values (" + PX + " , " + PY + " );");
                     drView.updateView();
-                    num=0;
+                    num = 0;
 
                 } else {
                 }
@@ -245,5 +237,13 @@ public class DeadReackoning2Activity extends AppCompatActivity {
 
 
         }
+    }
+
+    private void insertpdrtodb(SQLiteDatabase db, double x, double y) {
+        String sql = "insert into " + PrimeActivity.tableName +
+                " ( PX , PY ) values (" + x + " , " + y + " );";
+        db.execSQL(sql);
+
+
     }
 }
