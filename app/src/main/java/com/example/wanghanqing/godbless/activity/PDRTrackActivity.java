@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -64,6 +65,7 @@ public class PDRTrackActivity extends AppCompatActivity {
     private MySensorEventListener mySensorEventListener;
 
     public SQLiteDatabase dbPDR;
+    public SQLiteDatabase dbSensor;
 
     public double len = 0.7;
     public static int count;
@@ -122,7 +124,25 @@ public class PDRTrackActivity extends AppCompatActivity {
         pdrstart.setOnClickListener(new PDRstartListener());
 
         dbPDR = SQLiteDatabase.openOrCreateDatabase(Values.SENSORPATH + "PDRData.db3", null);
+
     }
+
+    Handler handler = new Handler();
+    Runnable runnable = new Runnable() {
+
+        @Override
+        public void run() {
+            // handler自带方法实现定时器
+            // 要做的事情，这里再次调用此Runnable对象，以实现每两秒实现一次的定时器操作
+            try {
+                handler.postDelayed(this, 20);
+                insertpdrtodb(dbPDR, PrimeActivity.tableName + "SENSOR", System.currentTimeMillis(), acc1, acc2, acc3);
+                //insertpdrtodb(dbPDR, PrimeActivity.tableName + "SENSOR",  acc1, acc2, acc3);
+            } catch (Exception e) {
+                e.printStackTrace();// 12345678
+            }
+        }
+    };
 
 
     final class PDRstartListener implements View.OnClickListener {
@@ -195,7 +215,7 @@ public class PDRTrackActivity extends AppCompatActivity {
 
                     PX = PX + len * Math.cos((5 * Math.PI / 2) - orient1);
                     PY = PY + len * Math.sin((5 * Math.PI / 2) - orient1);
-                    insertpdrtodb(dbPDR, PX, PY);
+                    insertpdrtodb(dbPDR, PrimeActivity.tableName, PX, PY);
                     //dbPDR.execSQL("insert into " + PrimeActivity.tableName + " ( PX , PY ) values (" + PX + " , " + PY + " );");
                     drView.updateView();
                     num = 0;
@@ -239,11 +259,15 @@ public class PDRTrackActivity extends AppCompatActivity {
         }
     }
 
-    private void insertpdrtodb(SQLiteDatabase db, double x, double y) {
-        String sql = "insert into " + PrimeActivity.tableName +
+    private void insertpdrtodb(SQLiteDatabase db, String tableName, double x, double y) {
+        String sql = "insert into " + tableName +
                 " ( PX , PY ) values (" + x + " , " + y + " );";
         db.execSQL(sql);
+    }
 
-
+    private void insertpdrtodb(SQLiteDatabase db, String tableName, long time, double x, double y, double z) {
+        String sql = "insert into " + tableName +
+                " ( time , acc1 , acc2 , acc3 ) values (" + time + "," + x + " , " + y + " , " + z + ");";
+        db.execSQL(sql);
     }
 }

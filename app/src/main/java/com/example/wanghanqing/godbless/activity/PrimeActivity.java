@@ -74,8 +74,8 @@ public class PrimeActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             EditText editText = (EditText) dialogView.findViewById(R.id.message);// 保存info的Edittext
-                            tableName= editText.getText().toString();
-                            dbSensor.execSQL("create table " + tableName + "(" +
+                            tableName = editText.getText().toString();
+                            dbPDR.execSQL("create table " + tableName + "SENSOR" + "(" +
                                     "SID integer primary key autoincrement ," +
                                     " time timestamp NOT NULL DEFAULT(datetime('now','localtime')), " +
                                     " acc1 real , acc2 real , acc3 real )");
