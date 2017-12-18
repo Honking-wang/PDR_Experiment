@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 
 import com.AoGIS.render.AoView;
-import com.example.wanghanqing.godbless.MainActivity;
+import com.example.wanghanqing.godbless.activity.MainActivity;
 import com.example.wanghanqing.godbless.R;
 
 import java.util.ArrayList;
@@ -95,65 +95,65 @@ public class AoMyView extends AoView {
         super.onUserBitmapDraw(bitmap);
         canvas = new Canvas(bitmap);
         // 进行轨迹点绘制
-        if (!MainActivity.pdrtrackflag) {
-            for (int i = 0; i < PDRList.size(); i++) {
-                preCoord = PDRList.get(i);
-                arr = MCoordToDCoord(preCoord[0], preCoord[1]);
-                wPDRx = (int) arr[0];
-                wPDRy = (int) arr[1];
-                canvas.drawBitmap(guijidianBitmap, wPDRx - 8, wPDRy - 8, null);
-            }
-        }
+//        if (!MainActivity.pdrtrackflag) {
+//            for (int i = 0; i < PDRList.size(); i++) {
+//                preCoord = PDRList.get(i);
+//                arr = MCoordToDCoord(preCoord[0], preCoord[1]);
+//                wPDRx = (int) arr[0];
+//                wPDRy = (int) arr[1];
+//                canvas.drawBitmap(guijidianBitmap, wPDRx - 8, wPDRy - 8, null);
+//            }
+//        }
 
-        if (MainActivity.gpstrackflag) {
-            if (MainActivity.gpsCOUNT != 0) {
-                preCoord = List.get(MainActivity.gpsCOUNT - 1);// 判断是否和上一个点的坐标一样
-                if ((preCoord[0] != MainActivity.X)
-                        || (preCoord[1] != MainActivity.Y)) {
-                    List.add(MainActivity.gpsCOUNT, new double[]{MainActivity.X,
-                            MainActivity.Y});// 将当前位置点添加到List中
-                    MainActivity.gpsCOUNT = MainActivity.gpsCOUNT + 1;// 计数器+1
-                    for (int i = 0; i < MainActivity.gpsCOUNT; i++)// 绘制以往位置点到为图上
-                    {
-                        preCoord = List.get(i);
-                        arr = MCoordToWCoord(preCoord[0], preCoord[1]);
-                        wx = (int) arr[0];
-                        wy = (int) arr[1];
-                        canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
-                    }
-                } else {
-                    for (int i = 0; i < MainActivity.gpsCOUNT; i++)// 绘制以往位置点到为图上
-                    {
-                        preCoord = List.get(i);
-                        arr = MCoordToWCoord(preCoord[0], preCoord[1]);
-                        wx = (int) arr[0];
-                        wy = (int) arr[1];
-                        canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
-                    }
-                }
-
-            } else {
-                List.add(MainActivity.gpsCOUNT, new double[]{MainActivity.X,
-                        MainActivity.Y});// 将当前位置点添加到List中
-                MainActivity.gpsCOUNT = MainActivity.gpsCOUNT + 1;// 计数器+1
-
-                for (int i = 0; i < MainActivity.gpsCOUNT; i++)// 绘制以往位置点到为图上
-                {
-                    preCoord = List.get(i);
-                    arr = MCoordToWCoord(preCoord[0], preCoord[1]);
-                    wx = (int) arr[0];
-                    wy = (int) arr[1];
-                    canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
-
-                }
-            }
-            double x = MainActivity.X;
-            double y = MainActivity.Y;
-            arr = MCoordToWCoord(x, y);
-            wx = (int) arr[0];
-            wy = (int) arr[1];
-            canvas.drawBitmap(dingweiBitmap, wx - 8, wy - 8, null);
-        } else {
+//        if (MainActivity.gpstrackflag) {
+//            if (MainActivity.gpsCOUNT != 0) {
+//                preCoord = List.get(MainActivity.gpsCOUNT - 1);// 判断是否和上一个点的坐标一样
+//                if ((preCoord[0] != MainActivity.X)
+//                        || (preCoord[1] != MainActivity.Y)) {
+//                    List.add(MainActivity.gpsCOUNT, new double[]{MainActivity.X,
+//                            MainActivity.Y});// 将当前位置点添加到List中
+//                    MainActivity.gpsCOUNT = MainActivity.gpsCOUNT + 1;// 计数器+1
+//                    for (int i = 0; i < MainActivity.gpsCOUNT; i++)// 绘制以往位置点到为图上
+//                    {
+//                        preCoord = List.get(i);
+//                        arr = MCoordToWCoord(preCoord[0], preCoord[1]);
+//                        wx = (int) arr[0];
+//                        wy = (int) arr[1];
+//                        canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+//                    }
+//                } else {
+//                    for (int i = 0; i < MainActivity.gpsCOUNT; i++)// 绘制以往位置点到为图上
+//                    {
+//                        preCoord = List.get(i);
+//                        arr = MCoordToWCoord(preCoord[0], preCoord[1]);
+//                        wx = (int) arr[0];
+//                        wy = (int) arr[1];
+//                        canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+//                    }
+//                }
+//
+//            } else {
+//                List.add(MainActivity.gpsCOUNT, new double[]{MainActivity.X,
+//                        MainActivity.Y});// 将当前位置点添加到List中
+//                MainActivity.gpsCOUNT = MainActivity.gpsCOUNT + 1;// 计数器+1
+//
+//                for (int i = 0; i < MainActivity.gpsCOUNT; i++)// 绘制以往位置点到为图上
+//                {
+//                    preCoord = List.get(i);
+//                    arr = MCoordToWCoord(preCoord[0], preCoord[1]);
+//                    wx = (int) arr[0];
+//                    wy = (int) arr[1];
+//                    canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+//
+//                }
+//            }
+//            double x = MainActivity.X;
+//            double y = MainActivity.Y;
+//            arr = MCoordToWCoord(x, y);
+//            wx = (int) arr[0];
+//            wy = (int) arr[1];
+//            canvas.drawBitmap(dingweiBitmap, wx - 8, wy - 8, null);
+//        } else {
             // 只绘制定位点
             //MainActivity.COUNT = 0;
             List.clear();
@@ -175,5 +175,5 @@ public class AoMyView extends AoView {
             canvas.drawBitmap(dingweiBitmap, wx - 8, wy - 8, null);
         }
     }
-}
+//}
 

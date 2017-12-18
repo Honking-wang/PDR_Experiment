@@ -127,22 +127,6 @@ public class PDRTrackActivity extends AppCompatActivity {
 
     }
 
-    Handler handler = new Handler();
-    Runnable runnable = new Runnable() {
-
-        @Override
-        public void run() {
-            // handler自带方法实现定时器
-            // 要做的事情，这里再次调用此Runnable对象，以实现每两秒实现一次的定时器操作
-            try {
-                handler.postDelayed(this, 20);
-                insertpdrtodb(dbPDR, PrimeActivity.tableName + "SENSOR", System.currentTimeMillis(), acc1, acc2, acc3);
-                //insertpdrtodb(dbPDR, PrimeActivity.tableName + "SENSOR",  acc1, acc2, acc3);
-            } catch (Exception e) {
-                e.printStackTrace();// 12345678
-            }
-        }
-    };
 
 
     final class PDRstartListener implements View.OnClickListener {
@@ -206,6 +190,7 @@ public class PDRTrackActivity extends AppCompatActivity {
                 acc3 = sensorEvent.values[2];
                 accTextView.setText(" acc1: " + sensorEvent.values[0] + " acc2: " + sensorEvent.values[1] +
                         " acc3: " + sensorEvent.values[2]);
+                insertpdrtodb(dbPDR, PrimeActivity.tableName + "SENSOR", System.currentTimeMillis(),"acc",acc1, acc2, acc3);
             }
             if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
                 if (sensorEvent.values[0] == 1.0) {
@@ -215,7 +200,7 @@ public class PDRTrackActivity extends AppCompatActivity {
 
                     PX = PX + len * Math.cos((5 * Math.PI / 2) - orient1);
                     PY = PY + len * Math.sin((5 * Math.PI / 2) - orient1);
-                    insertpdrtodb(dbPDR, PrimeActivity.tableName, PX, PY);
+                    insertpdrtodb(dbPDR, PrimeActivity.tableName , System.currentTimeMillis(),PX, PY);
                     //dbPDR.execSQL("insert into " + PrimeActivity.tableName + " ( PX , PY ) values (" + PX + " , " + PY + " );");
                     drView.updateView();
                     num = 0;
@@ -232,12 +217,14 @@ public class PDRTrackActivity extends AppCompatActivity {
                     orient += 360;
                 }
                 oriTextView.setText("" + orient);
+                insertpdrtodb(dbPDR,PrimeActivity.tableName+"SENSOR",System.currentTimeMillis(),orient);
             }
             if (sensorEvent.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
                 gyro1 = sensorEvent.values[0];
                 gyro2 = sensorEvent.values[1];
                 gyro3 = sensorEvent.values[2];
                 gyroTextView.setText(" gyro1: " + gyro1 + " gyro2: " + gyro2 + " gyro3: " + gyro3);
+                insertpdrtodb(dbPDR,PrimeActivity.tableName+"SENSOR",System.currentTimeMillis(),"gyro",gyro1,gyro2,gyro3);
             }
             if (sensorEvent.sensor.getType() == Sensor.TYPE_GYROSCOPE_UNCALIBRATED) {
                 gyro_unca1 = sensorEvent.values[0];
@@ -259,15 +246,22 @@ public class PDRTrackActivity extends AppCompatActivity {
         }
     }
 
-    private void insertpdrtodb(SQLiteDatabase db, String tableName, double x, double y) {
+    private void insertpdrtodb(SQLiteDatabase db, String tableName, long time , double x) {
         String sql = "insert into " + tableName +
-                " ( PX , PY ) values (" + x + " , " + y + " );";
+                " ( time , ori ) values (" + time + "," + x + ");";
         db.execSQL(sql);
     }
 
-    private void insertpdrtodb(SQLiteDatabase db, String tableName, long time, double x, double y, double z) {
+    private void insertpdrtodb(SQLiteDatabase db, String tableName, long time ,double x, double y) {
         String sql = "insert into " + tableName +
-                " ( time , acc1 , acc2 , acc3 ) values (" + time + "," + x + " , " + y + " , " + z + ");";
+                " ( time , PX , PY ) values ("+ time + "," + x + " , " + y + " );";
+        db.execSQL(sql);
+    }
+
+
+    private void insertpdrtodb(SQLiteDatabase db, String tableName, long time ,String name, double x, double y, double z) {
+        String sql = "insert into " + tableName +
+                " ( time , "+name+"1 ,"+name+"2 ," +name+"3) values (" + time + "," + x + " , " + y + " , " + z + ");";
         db.execSQL(sql);
     }
 }

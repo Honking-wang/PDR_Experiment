@@ -1,12 +1,21 @@
 <resources>
+    <string name="description">试验描述</string>
+    <string name="record">试验记录</string>
+    <string name="EXP_GPS">GPS试验</string>
+    <string name="EXP_PDR">PDR试验</string>
+
+
+
+
+
     <string name="app_name">PDR_Experiment</string>
     <string name="locate">定位</string>
-    <string name="track">轨迹</string>
+
     <string name="pedometer">计步器</string>
     <string name="peak">波峰检测算法</string>
     <string name="detectsensor">计步传感器</string>
     <string name="GPStrack">GPS轨迹</string>
     <string name="PDRtrack">PDR轨迹</string>
-    <string name="record">记录</string>
+
     <string name="title_activity_gps2">GPS2Activity</string>
 </resources>

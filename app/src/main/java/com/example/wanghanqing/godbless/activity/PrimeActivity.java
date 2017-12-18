@@ -23,7 +23,6 @@ public class PrimeActivity extends AppCompatActivity {
     public Button xzdb;
     public Button PDRexp;
     public Button GPSTra;
-    public SQLiteDatabase dbSensor;
     public SQLiteDatabase dbPDR;
     public SQLiteDatabase dbGPS;
     public static String tableName;
@@ -38,7 +37,6 @@ public class PrimeActivity extends AppCompatActivity {
         GPSTra = (Button) findViewById(R.id.GPSTra);
 
         //创建或打开数据库
-        dbSensor = SQLiteDatabase.openOrCreateDatabase(Values.SENSORPATH + "SensorData.db3", null);
         dbPDR = SQLiteDatabase.openOrCreateDatabase(Values.SENSORPATH + "PDRData.db3", null);
         dbGPS = SQLiteDatabase.openOrCreateDatabase(Values.SENSORPATH + "GPSData.db3", null);
 
@@ -78,7 +76,7 @@ public class PrimeActivity extends AppCompatActivity {
                             dbPDR.execSQL("create table " + tableName + "SENSOR" + "(" +
                                     "SID integer primary key autoincrement ," +
                                     " time timestamp NOT NULL DEFAULT(datetime('now','localtime')), " +
-                                    " acc1 real , acc2 real , acc3 real )");
+                                    " acc1 real , acc2 real , acc3 real , ori real , gyro1 real , gyro2 real , gyro3 real)");
                             dbPDR.execSQL("create table " + tableName + "(" +
                                     "PID integer primary key autoincrement ," +
                                     " PX real , PY real )");
