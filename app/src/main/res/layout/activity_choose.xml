@@ -5,92 +5,58 @@
     android:orientation="vertical">
 
 
-    <CheckBox
-        android:id="@+id/locatebox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="原始PDR" />
-
-    <CheckBox
-        android:id="@+id/sensorbox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="传感器数据" />
-
     <TextView
-        android:id="@+id/textview1"
+        android:id="@+id/tvlen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="轨迹记录方式" />
+        android:text="@string/tvlen" />
 
-
-
-    <CheckBox
-        android:id="@+id/PDR"
+    <RadioGroup
+        android:id="@+id/rglen"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/PDRtrack" />
+        android:layout_height="wrap_content">
 
-
-    <LinearLayout
-        android:layout_width="356dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="right"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="记步" />
-
-        <RadioGroup
-            android:id="@+id/dx1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/jibu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="计步传感器" />
-
-            <RadioButton
-                android:id="@+id/bofeng"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="波峰检测算法" />
-        </RadioGroup>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="算法" />
-
-        <RadioGroup
-            android:id="@+id/dx2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/wu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="无" />
-
-            <RadioButton
-                android:id="@+id/ekf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="扩展卡尔曼滤波" />
-        </RadioGroup>
-
-        <Button
-            android:id="@+id/queren"
+        <RadioButton
+            android:id="@+id/len1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="确认" />
-    </LinearLayout>
+            android:text="@string/len1" />
+
+        <RadioButton
+            android:id="@+id/len2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/len2" />
+
+        <RadioButton
+            android:id="@+id/len3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/len3" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/tvori"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvori" />
+
+    <RadioGroup
+        android:id="@+id/rgori"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/ori1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ori1" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_confirm" />
 
 </LinearLayout>

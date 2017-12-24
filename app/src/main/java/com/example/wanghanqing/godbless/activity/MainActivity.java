@@ -2,6 +2,7 @@ package com.example.wanghanqing.godbless.activity;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Criteria;
 import android.location.Location;
@@ -22,6 +23,7 @@ import com.AoGIS.render.AoSysLib;
 import com.example.wanghanqing.godbless.R;
 import com.example.wanghanqing.godbless.dialog.DescripDialog;
 import com.example.wanghanqing.godbless.helper.MyDatabaseHelper;
+import com.example.wanghanqing.godbless.utils.Utils;
 import com.example.wanghanqing.godbless.view.AoMyView;
 
 
@@ -32,6 +34,7 @@ import static com.example.wanghanqing.godbless.values.Values.LIBPATH;
 public class MainActivity extends AppCompatActivity {
 
     public static int COUNT;// 定位点个数
+    public static boolean FLAG;// 轨迹记录开关
     public static double X;
     public static double Y;
 
@@ -49,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
     //按钮
     public Button description;
+    public Button exp_GPS;
+    public Button exp_PDR;
 
     DescripDialog descripDialog;
     SQLiteDatabase sqLiteDatabase;
@@ -60,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dbHelper = new MyDatabaseHelper(this);
-        sqLiteDatabase=dbHelper.getReadableDatabase();
+        sqLiteDatabase = dbHelper.getReadableDatabase();
 
         //打开地图
         AoSysLib.loadLib(LIBPATH);
@@ -94,7 +99,11 @@ public class MainActivity extends AppCompatActivity {
         aoMyView.updateView();
 
         description = (Button) findViewById(R.id.description);
+        exp_GPS = (Button) findViewById(R.id.EXP_GPS);
+        exp_PDR= (Button) findViewById(R.id.EXP_PDR);
         description.setOnClickListener(new desListener());
+        exp_GPS.setOnClickListener(new GPSListener());
+        exp_PDR.setOnClickListener(new PDRListener());
 
 
     }
@@ -119,13 +128,49 @@ public class MainActivity extends AppCompatActivity {
                 String expression = descripDialog.text_expression.getText().toString().trim();
                 //向数据库插入数据
                 insertData(sqLiteDatabase, tester, facility, expression);
-                //insertData(sqLiteDatabase, tester, facility);
                 Toast.makeText(MainActivity.this, "添加信息成功", Toast.LENGTH_SHORT).show();
                 descripDialog.dismiss();
             }
         };
 
 
+    }
+
+    final class GPSListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            if (!FLAG) {
+                // 如果轨迹功能开启。
+                if (Utils.GPSisOPen(getApplicationContext())) {
+                    if (location != null) {
+                        FLAG = true;
+                        COUNT = 0;
+                        aoMyView.updateView();
+                        insertgpstodb(X, Y);
+                        exp_GPS.setText("结束GPS试验");
+                        Toast.makeText(getApplicationContext(), "轨迹记录开始",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(),
+                                "卫星信号弱，无法获取位置信息。", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "请开启位置服务",
+                            Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                exp_GPS.setText("GPR试验");
+            }
+        }
+    }
+
+    final class PDRListener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(MainActivity.this, ChooseActivity.class);
+            startActivity(intent);
+        }
     }
 
 
@@ -142,10 +187,11 @@ public class MainActivity extends AppCompatActivity {
                 , new String[]{tester, facility, expression});
     }
 
-    public void insertData(SQLiteDatabase sqLiteDatabase, String tester, String facility) {
-        sqLiteDatabase.execSQL("insert into EXP_lab_table2 values( null , ? , ?)"
-                , new String[]{tester, facility});
+    private void insertgpstodb(double x, double y) {
+        String sql = "insert into EXP_table ( GX , GY ) values (" + x + " , " + y + " );";
+        sqLiteDatabase.execSQL(sql);
     }
+
 
     /**
      * 经纬度转化为北京54坐标系，在地图上显示点必经的一步

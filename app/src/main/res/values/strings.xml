@@ -3,6 +3,15 @@
     <string name="record">试验记录</string>
     <string name="EXP_GPS">GPS试验</string>
     <string name="EXP_PDR">PDR试验</string>
+    <string name="tvlen">步长模型</string>
+    <string name="len1">常数模型</string>
+    <string name="len2">线性模型</string>
+    <string name="len3">非线性模型</string>
+    <string name="tvori">方向估计方法</string>
+    <string name="ori1">加速度传感器与磁力计</string>
+    <string name="startpdr">开始</string>
+    <string name="endpdr">结束</string>
+    <string name="btn_confirm">确认</string>
 
 
 

@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.wanghanqing.godbless.ChooseActivity;
 import com.example.wanghanqing.godbless.R;
 import com.example.wanghanqing.godbless.values.Values;
 

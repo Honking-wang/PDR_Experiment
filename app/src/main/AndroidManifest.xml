@@ -21,15 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChooseActivity" />
+        <activity android:name=".activity.ChooseActivity" />
         <activity android:name=".SensorActivity" />
         <activity android:name=".activity.PrimeActivity" />
         <activity android:name=".activity.GPSTrackActivity" />
-        <activity android:name=".PDRTrackoldActivity" />
+        <activity android:name=".activity.ExpPDRActivity" />
         <activity android:name=".activity.PDRTrackActivity" />
 
         <service
-            android:name=".service.SensorService"
+            android:name=".service.PDRService"
             android:enabled="true"
             android:exported="true"></service>
     </application>
