@@ -18,7 +18,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private final String CREATE_labtable_SQL="create table EXP_lab_table (EXP_ID integer primary key " +
             "autoincrement, tester text, facility text, expression text)";
     private final String CREATE_exptable_SQL="create table EXP_table (ID integer primary key " +
-            "autoincrement, EXP_ID integer, GX real, GY real, PX real, PY real, PRDid integer)";
+            "autoincrement, EXP_ID integer, GX real, GY real, PX real, PY real, PRDid text)";
 
     public MyDatabaseHelper(Context context) {
         super(context, dbname, null, version);

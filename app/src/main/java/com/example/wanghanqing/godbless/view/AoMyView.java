@@ -91,11 +91,83 @@ public class AoMyView extends AoView {
         PDRList.add(new double[]{mPDRx, mPDRy});
     }
 
+
     public void onUserBitmapDraw(Bitmap bitmap) {
         super.onUserBitmapDraw(bitmap);
         canvas = new Canvas(bitmap);
         // 进行轨迹点绘制
-//        if (!MainActivity.pdrtrackflag) {
+//        if (MainActivity.FLAG) {
+//            if (MainActivity.COUNT != 0) {
+//                //获取到list里最新的点
+//                preCoord = List.get(MainActivity.COUNT - 1);
+//                // 判断是否和上一个点的坐标一样
+//                if ((preCoord[0] != MainActivity.X)
+//                        || (preCoord[1] != MainActivity.Y)) {
+//                    List.add(MainActivity.COUNT, new double[]{MainActivity.X,
+//                            MainActivity.Y});// 将当前位置点添加到List中，index为count的位置
+//                    MainActivity.COUNT = MainActivity.COUNT + 1;// 计数器+1
+//                    for (int i = 0; i < MainActivity.COUNT; i++)// 绘制以往位置点到为图上
+//                    {
+//                        preCoord = List.get(i);
+//                        arr = MCoordToWCoord(preCoord[0], preCoord[1]);
+//                        wx = (int) arr[0];
+//                        wy = (int) arr[1];
+//                        canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+//                    }
+//                } else {
+//                    for (int i = 0; i < MainActivity.COUNT; i++)// 绘制以往位置点到为图上
+//                    {
+//                        preCoord = List.get(i);
+//                        arr = MCoordToWCoord(preCoord[0], preCoord[1]);
+//                        wx = (int) arr[0];
+//                        wy = (int) arr[1];
+//                        canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+//                    }
+//                }
+//
+//            } else {
+//                List.add(MainActivity.COUNT, new double[]{MainActivity.X,
+//                        MainActivity.Y});// 将当前位置点添加到List中
+//                MainActivity.COUNT = MainActivity.COUNT + 1;// 计数器+1
+//
+//                for (int i = 0; i < MainActivity.COUNT; i++)// 绘制以往位置点到为图上
+//                {
+//                    preCoord = List.get(i);
+//                    arr = MCoordToWCoord(preCoord[0], preCoord[1]);
+//                    wx = (int) arr[0];
+//                    wy = (int) arr[1];
+//                    canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
+//
+//                }
+//            }
+//            double x = MainActivity.X;
+//            double y = MainActivity.Y;
+//            arr = MCoordToWCoord(x, y);
+//            wx = (int) arr[0];
+//            wy = (int) arr[1];
+//            canvas.drawBitmap(dingweiBitmap, wx - 8, wy - 8, null);
+//        } else {
+            // 只绘制定位点
+//            MainActivity.COUNT = 0;
+            List.clear();
+            paint.setColor(Color.BLUE);
+            paint.setAlpha(200);
+            // 让画出的图形是空心的
+            paint.setStyle(android.graphics.Paint.Style.FILL);
+            // 设置画出的线的 粗细程度
+            paint.setStrokeWidth(5);
+            // 画圆
+
+            double x = MainActivity.X;
+            double y = MainActivity.Y;
+            arr = MCoordToWCoord(x, y);
+
+            wx = (int) arr[0];
+            wy = (int) arr[1];
+
+            canvas.drawBitmap(dingweiBitmap, wx - 8, wy - 8, null);
+        //}
+        //  if (!MainActivity.FLAG) {
 //            for (int i = 0; i < PDRList.size(); i++) {
 //                preCoord = PDRList.get(i);
 //                arr = MCoordToDCoord(preCoord[0], preCoord[1]);
@@ -154,26 +226,26 @@ public class AoMyView extends AoView {
 //            wy = (int) arr[1];
 //            canvas.drawBitmap(dingweiBitmap, wx - 8, wy - 8, null);
 //        } else {
-            // 只绘制定位点
-            //MainActivity.COUNT = 0;
-            List.clear();
-            paint.setColor(Color.BLUE);
-            paint.setAlpha(200);
-            // 让画出的图形是空心的
-            paint.setStyle(android.graphics.Paint.Style.FILL);
-            // 设置画出的线的 粗细程度
-            paint.setStrokeWidth(5);
-            // 画圆
-
-            double x = MainActivity.X;
-            double y = MainActivity.Y;
-            arr = MCoordToWCoord(x, y);
-
-            wx = (int) arr[0];
-            wy = (int) arr[1];
-
-            canvas.drawBitmap(dingweiBitmap, wx - 8, wy - 8, null);
-        }
+        // 只绘制定位点
+        //MainActivity.COUNT = 0;
+//        List.clear();
+//        paint.setColor(Color.BLUE);
+//        paint.setAlpha(200);
+//        // 让画出的图形是空心的
+//        paint.setStyle(android.graphics.Paint.Style.FILL);
+//        // 设置画出的线的 粗细程度
+//        paint.setStrokeWidth(5);
+//        // 画圆
+//
+//        double x = MainActivity.X;
+//        double y = MainActivity.Y;
+//        arr = MCoordToWCoord(x, y);
+//
+//        wx = (int) arr[0];
+//        wy = (int) arr[1];
+//
+//        canvas.drawBitmap(dingweiBitmap, wx - 8, wy - 8, null);
     }
+}
 //}
 

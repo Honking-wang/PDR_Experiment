@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 
 import com.AoGIS.render.AoView;
-import com.example.wanghanqing.godbless.activity.GPSTrackActivity;
+import com.example.wanghanqing.godbless.activity.ExpGPSActivity;
 import com.example.wanghanqing.godbless.R;
 
 import java.util.ArrayList;
@@ -84,17 +84,15 @@ public class AoGPSView extends AoView {
         super.onUserBitmapDraw(bitmap);
         canvas = new Canvas(bitmap);
         // 进行轨迹点绘制
-        if (GPSTrackActivity.FLAG) {
-            if (GPSTrackActivity.COUNT != 0) {
-                //获取到list里最新的点
-                preCoord = List.get(GPSTrackActivity.COUNT - 1);
-                // 判断是否和上一个点的坐标一样
-                if ((preCoord[0] != GPSTrackActivity.GX)
-                        || (preCoord[1] != GPSTrackActivity.GY)) {
-                    List.add(GPSTrackActivity.COUNT, new double[]{GPSTrackActivity.GX,
-                            GPSTrackActivity.GY});// 将当前位置点添加到List中，index为count的位置
-                    GPSTrackActivity.COUNT = GPSTrackActivity.COUNT + 1;// 计数器+1
-                    for (int i = 0; i < GPSTrackActivity.COUNT; i++)// 绘制以往位置点到为图上
+        if (ExpGPSActivity.FLAG) {
+            if (ExpGPSActivity.COUNT != 0) {//获取到list里最新的点
+                preCoord = List.get(ExpGPSActivity.COUNT - 1);// 判断是否和上一个点的坐标一样
+                if ((preCoord[0] != ExpGPSActivity.GX)
+                        || (preCoord[1] != ExpGPSActivity.GY)) {
+                    List.add(ExpGPSActivity.COUNT, new double[]{ExpGPSActivity.GX,
+                            ExpGPSActivity.GY});// 将当前位置点添加到List中，index为count的位置
+                    ExpGPSActivity.COUNT = ExpGPSActivity.COUNT + 1;// 计数器+1
+                    for (int i = 0; i < ExpGPSActivity.COUNT; i++)// 绘制以往位置点到为图上
                     {
                         preCoord = List.get(i);
                         arr = MCoordToWCoord(preCoord[0], preCoord[1]);
@@ -103,7 +101,7 @@ public class AoGPSView extends AoView {
                         canvas.drawBitmap(guijidianBitmap, wx - 8, wy - 8, null);
                     }
                 } else {
-                    for (int i = 0; i < GPSTrackActivity.COUNT; i++)// 绘制以往位置点到为图上
+                    for (int i = 0; i < ExpGPSActivity.COUNT; i++)// 绘制以往位置点到为图上
                     {
                         preCoord = List.get(i);
                         arr = MCoordToWCoord(preCoord[0], preCoord[1]);
@@ -114,11 +112,11 @@ public class AoGPSView extends AoView {
                 }
 
             } else {
-                List.add(GPSTrackActivity.COUNT, new double[]{GPSTrackActivity.GX,
-                        GPSTrackActivity.GY});// 将当前位置点添加到List中
-                GPSTrackActivity.COUNT = GPSTrackActivity.COUNT + 1;// 计数器+1
+                List.add(ExpGPSActivity.COUNT, new double[]{ExpGPSActivity.GX,
+                        ExpGPSActivity.GY});// 将当前位置点添加到List中
+                ExpGPSActivity.COUNT = ExpGPSActivity.COUNT + 1;// 计数器+1
 
-                for (int i = 0; i < GPSTrackActivity.COUNT; i++)// 绘制以往位置点到为图上
+                for (int i = 0; i < ExpGPSActivity.COUNT; i++)// 绘制以往位置点到为图上
                 {
                     preCoord = List.get(i);
                     arr = MCoordToWCoord(preCoord[0], preCoord[1]);
@@ -128,15 +126,15 @@ public class AoGPSView extends AoView {
 
                 }
             }
-            double x = GPSTrackActivity.GX;
-            double y = GPSTrackActivity.GY;
+            double x = ExpGPSActivity.GX;
+            double y = ExpGPSActivity.GY;
             arr = MCoordToWCoord(x, y);
             wx = (int) arr[0];
             wy = (int) arr[1];
             canvas.drawBitmap(dingweiBitmap, wx - 8, wy - 8, null);
         } else {
             // 只绘制定位点
-            GPSTrackActivity.COUNT = 0;
+            ExpGPSActivity.COUNT = 0;
             List.clear();
             paint.setColor(Color.BLUE);
             paint.setAlpha(200);
@@ -146,8 +144,8 @@ public class AoGPSView extends AoView {
             paint.setStrokeWidth(5);
             // 画圆
 
-            double x = GPSTrackActivity.GX;
-            double y = GPSTrackActivity.GY;
+            double x = ExpGPSActivity.GX;
+            double y = ExpGPSActivity.GY;
             arr = MCoordToWCoord(x, y);
 
             wx = (int) arr[0];
@@ -155,11 +153,11 @@ public class AoGPSView extends AoView {
 
             canvas.drawBitmap(dingweiBitmap, wx - 8, wy - 8, null);
         }
-//        if (GPSTrackActivity.DISPLAY)//如果开启了轨迹显示
+//        if (ExpGPSActivity.DISPLAY)//如果开启了轨迹显示
 //        {
-//            for (int i = 0; i < GPSTrackActivity.displayList.size(); i++)// 绘制以往位置点到为图上
+//            for (int i = 0; i < ExpGPSActivity.displayList.size(); i++)// 绘制以往位置点到为图上
 //            {
-//                preCoord = GPSTrackActivity.displayList.get(i);
+//                preCoord = ExpGPSActivity.displayList.get(i);
 //                arr = MCoordToWCoord(preCoord[0], preCoord[1]);
 //                wx = (int) arr[0];
 //                wy = (int) arr[1];

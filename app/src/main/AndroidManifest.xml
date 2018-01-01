@@ -23,10 +23,9 @@
         </activity>
         <activity android:name=".activity.ChooseActivity" />
         <activity android:name=".SensorActivity" />
-        <activity android:name=".activity.PrimeActivity" />
-        <activity android:name=".activity.GPSTrackActivity" />
+        <activity android:name=".activity.ExpGPSActivity" />
         <activity android:name=".activity.ExpPDRActivity" />
-        <activity android:name=".activity.PDRTrackActivity" />
+        <activity android:name=".PDRTrackActivity" />
 
         <service
             android:name=".service.PDRService"

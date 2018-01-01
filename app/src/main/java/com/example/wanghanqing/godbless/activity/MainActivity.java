@@ -3,6 +3,7 @@ package com.example.wanghanqing.godbless.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Criteria;
 import android.location.Location;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     DescripDialog descripDialog;
     SQLiteDatabase sqLiteDatabase;
+    int expid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         gworkSpace = aoMap.getWorkSpace();
 
         //显示定位点和轨迹点
-        COUNT = 0;
+        //COUNT = 0;
         updateWithNewLocation(location);
 
         //显示地图
@@ -100,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
         description = (Button) findViewById(R.id.description);
         exp_GPS = (Button) findViewById(R.id.EXP_GPS);
-        exp_PDR= (Button) findViewById(R.id.EXP_PDR);
+        exp_PDR = (Button) findViewById(R.id.EXP_PDR);
         description.setOnClickListener(new desListener());
         exp_GPS.setOnClickListener(new GPSListener());
         exp_PDR.setOnClickListener(new PDRListener());
@@ -140,35 +142,24 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            if (!FLAG) {
-                // 如果轨迹功能开启。
-                if (Utils.GPSisOPen(getApplicationContext())) {
-                    if (location != null) {
-                        FLAG = true;
-                        COUNT = 0;
-                        aoMyView.updateView();
-                        insertgpstodb(X, Y);
-                        exp_GPS.setText("结束GPS试验");
-                        Toast.makeText(getApplicationContext(), "轨迹记录开始",
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(),
-                                "卫星信号弱，无法获取位置信息。", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), "请开启位置服务",
-                            Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                exp_GPS.setText("GPR试验");
-            }
+            //查询表1最后一条记录
+            Cursor cursor = sqLiteDatabase.rawQuery("select MAX(EXP_ID) as maxid from EXP_lab_table", null);
+            cursor.moveToNext();
+            expid=cursor.getInt(cursor.getColumnIndex("maxid"));
+            Intent intent = new Intent(MainActivity.this, ExpGPSActivity.class);
+            intent.putExtra("expid", expid+"");
+            startActivity(intent);
         }
     }
 
-    final class PDRListener implements View.OnClickListener{
+    final class PDRListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
+            Cursor cursor = sqLiteDatabase.rawQuery("select MAX(EXP_ID) as maxid from EXP_lab_table", null);
+            cursor.moveToNext();
+            expid=cursor.getInt(cursor.getColumnIndex("maxid"));
             Intent intent = new Intent(MainActivity.this, ChooseActivity.class);
+            intent.putExtra("expid", expid+"");
             startActivity(intent);
         }
     }

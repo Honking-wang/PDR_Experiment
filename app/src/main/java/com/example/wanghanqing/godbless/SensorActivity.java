@@ -222,10 +222,6 @@ public class SensorActivity extends AppCompatActivity {
                     steTextView.setText("" + step);
                 }
             }
-            if (sensorEvent.sensor.getType() == Sensor.TYPE_ORIENTATION) {
-                orient = sensorEvent.values[0];
-                oriTextView.setText("" + orient);
-            }
             if (sensorEvent.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
                 gyro1 = sensorEvent.values[0];
                 gyro2 = sensorEvent.values[1];

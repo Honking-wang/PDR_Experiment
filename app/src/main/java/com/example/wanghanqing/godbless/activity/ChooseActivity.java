@@ -26,6 +26,9 @@ public class ChooseActivity extends AppCompatActivity {
 
     private Button confirm;
 
+    Intent intent2;
+    int expid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,9 @@ public class ChooseActivity extends AppCompatActivity {
         len3 = (RadioButton) findViewById(R.id.len3);
         ori1 = (RadioButton) findViewById(R.id.ori1);
         confirm = (Button) findViewById(R.id.btn_confirm);
+
+        intent2 = getIntent();
+        expid = Integer.parseInt(intent2.getStringExtra("expid"));
 
         rglen.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -75,6 +81,7 @@ public class ChooseActivity extends AppCompatActivity {
                     Intent intent = new Intent(ChooseActivity.this, ExpPDRActivity.class);
                     intent.putExtra("lentype", lentype+"");
                     intent.putExtra("oritype", oritype+"");
+                    intent.putExtra("expid", expid+"");
                     startActivity(intent);
                 }
             }

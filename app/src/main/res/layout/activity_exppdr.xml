@@ -10,18 +10,11 @@
         android:layout_height="0dp"
         android:layout_weight="10">
 
-        <com.example.wanghanqing.godbless.view.AoMyView
-            android:id="@+id/pdraomyview"
+        <com.example.wanghanqing.godbless.view.AoPDRView
+            android:id="@+id/aopdrview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="TextView" />
     </RelativeLayout>
 
     <LinearLayout
@@ -36,13 +29,19 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/startpdr" />
-
         <Button
             android:id="@+id/endpdr"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/endpdr" />
+
+        <Button
+            android:id="@+id/pdrback"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/pdrback" />
     </LinearLayout>
 
 

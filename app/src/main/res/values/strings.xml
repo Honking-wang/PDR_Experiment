@@ -11,7 +11,11 @@
     <string name="ori1">加速度传感器与磁力计</string>
     <string name="startpdr">开始</string>
     <string name="endpdr">结束</string>
+    <string name="pdrback">返回</string>
     <string name="btn_confirm">确认</string>
+    <string name="gpsback">返回</string>
+    <string name="gpsstart">开始GPS试验</string>
+
 
 
 
